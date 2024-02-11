@@ -19,7 +19,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const openConfirmationModal = (username, wantedRole) => {
             confirmationModalMessageDisplayer.innerHTML = `T'es vraiment sûr de vouloir réattribuer le rôle ${wantedRole} à ${username} ?`;
-            confirmationModal.classList.remove('d-none');
+            confirmationModal.classList.remove('hidden');
         };
 
         autoFillFormBtns.forEach(activatorBtn => {
@@ -31,7 +31,7 @@ document.addEventListener('DOMContentLoaded', () => {
         };
 
         const hideConfirmationModal = () => {
-            confirmationModal.classList.add('d-none');
+            confirmationModal.classList.add('hidden');
         };
 
         confirmationModalConfirmBtn.addEventListener('click', sendForm);

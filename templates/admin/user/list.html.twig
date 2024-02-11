@@ -3,30 +3,32 @@
 {% block title %}Gestion utilisateurs{% endblock %}
 
 {% block body %}
-    <h2>Liste des utilisateurs</h2>
+    {% include '_layouts/flash_message.html.twig' %}
+
+    <h2 class="text-center block text-2xl my-16 sm:text-3xl font-bold text-amber-600 tracking-wide dark:text-amber-600">Liste des utilisateurs</h2>
 
     {{ form(userRoleForm) }}
     {% include '_layouts/confirmation-modal.html.twig' %}
 
-    <table>
+    <table class="mx-auto my-8 table-auto border-collapse border border-slate-500">
         <thead>
             <tr>
-                <th>Pseudo</th>
-                <th>Rôle</th>
-                <th>Action</th>
+                <th class="p-4 border-y border-b-2 border-slate-600">Pseudo</th>
+                <th class="p-4 border-y border-b-2 border-slate-600">Rôle</th>
+                <th class="p-4 border-y border-b-2 border-slate-600">Action</th>
             </tr>
         </thead>
         <tbody>
             {% for user in users %}
                 {% set biggestRole = user.roles|first|replace({'ROLE_': ''})|lower|capitalize %}
             <tr>
-                <td>{{ user.username }}</td>
-                <td>{{ biggestRole }}</td>
-                <td>
+                <td class="p-4 border-y border-slate-700">{{ user.username }}</td>
+                <td class="p-4 border-y border-slate-700">{{ biggestRole }}</td>
+                <td class="p-4 border-y border-slate-700 hover:text-orange-400">
                     {% if (biggestRole == 'Contributor') %}
-                        <div class="user-role-form-activator" data-name="{{ user.username }}" data-role-wanted="USER">Supprimer le rôle Contributor</div>
+                        <div class="user-role-form-activator cursor-pointer" data-name="{{ user.username }}" data-role-wanted="USER">Supprimer le rôle Contributor</div>
                     {% elseif biggestRole == 'User' %}
-                        <div class="user-role-form-activator" data-name="{{ user.username }}" data-role-wanted="CONTRIBUTOR">Ajouter le rôle Contributor</div>
+                        <div class="user-role-form-activator cursor-pointer" data-name="{{ user.username }}" data-role-wanted="CONTRIBUTOR">Ajouter le rôle Contributor</div>
                     {% endif %}
             <tr>
             {% endfor %}
@@ -37,4 +39,5 @@
 {% block javascripts %}
     {{ parent() }}
     {{ encore_entry_script_tags('user-role-form-autofill') }}
+    {{ encore_entry_script_tags('flash-message') }}
 {% endblock %}

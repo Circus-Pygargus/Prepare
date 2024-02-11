@@ -1,7 +1,3 @@
-body {
-    background-color: skyblue;
-}
-
-.d-none {
-    display: none;
-}
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
