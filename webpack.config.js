@@ -22,6 +22,7 @@ Encore
      */
     .addEntry('app', './assets/app.js')
     .addEntry('user-role-form-autofill', './assets/js/form/change-user-role-form-autofill.js')
+    .addEntry('flash-message', './assets/js/flash-message.js')
 
     // When enabled, Webpack "splits" your files into smaller pieces for greater optimization.
     .splitEntryChunks()
