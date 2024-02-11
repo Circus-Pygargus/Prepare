@@ -23,12 +23,17 @@
                 <td>{{ biggestRole }}</td>
                 <td>
                     {% if (biggestRole == 'Contributor') %}
-                        <div>Supprimer le rôle Contributor</div>
+                        <div class="user-role-form-activator" data-name="{{ user.username }}" data-role-wanted="USER">Supprimer le rôle Contributor</div>
                     {% elseif biggestRole == 'User' %}
-                        <div>Ajouter le rôle Contributor</div>
+                        <div class="user-role-form-activator" data-name="{{ user.username }}" data-role-wanted="CONTRIBUTOR">Ajouter le rôle Contributor</div>
                     {% endif %}
             <tr>
             {% endfor %}
         </tbody>
     </table>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('user-role-form-autofill') }}
 {% endblock %}
