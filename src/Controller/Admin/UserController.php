@@ -2,6 +2,7 @@
 
 namespace App\Controller\Admin;
 
+use App\Form\Type\ChangeUserRoleType;
 use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -15,9 +16,11 @@ class UserController extends AbstractController
         $this->denyAccessUnlessGranted('ROLE_ADMIN');
 
         $users = $userRepository->findAll();
+        $roleForm = $this->createForm(ChangeUserRoleType::class, null);
 
         return $this->render('admin/user/list.html.twig', [
-            'users' => $users
+            'users' => $users,
+            'userRoleForm' => $roleForm,
         ]);
     }
 }
