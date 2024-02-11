@@ -16,7 +16,7 @@ class ChangeUserRoleType extends AbstractType
                 'required' => true,
                 'label' => false,
                 'attr' => [
-                    'class' => 'd-none',
+                    'class' => 'hidden',
                 ],
             ])
             ->add('wantedBiggestRole', ChoiceType::class, [
@@ -29,7 +29,7 @@ class ChangeUserRoleType extends AbstractType
                 'expanded' => false,
                 'multiple' => false,
                 'attr' => [
-                    'class' => 'd-none',
+                    'class' => 'hidden',
                 ],
             ])
         ;
