@@ -12,6 +12,7 @@
             <tr>
                 <th>Pseudo</th>
                 <th>Rôle</th>
+                <th>Action</th>
             </tr>
         </thead>
         <tbody>
@@ -20,6 +21,12 @@
             <tr>
                 <td>{{ user.username }}</td>
                 <td>{{ biggestRole }}</td>
+                <td>
+                    {% if (biggestRole == 'Contributor') %}
+                        <div>Supprimer le rôle Contributor</div>
+                    {% elseif biggestRole == 'User' %}
+                        <div>Ajouter le rôle Contributor</div>
+                    {% endif %}
             <tr>
             {% endfor %}
         </tbody>
