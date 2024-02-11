@@ -1,7 +1,7 @@
-<div id="confirmation-modal" class="confirmation-modal d-none">
-    <p class="confirmation-modal_message"></p>
-    <div class="confirmation-modal_buttons">
-        <div id="confirmation-modal-confirm" class="btn btn-confirm">Confirmer</div>
-        <div id="confirmation-modal-cancel" class="btn btn-cancel">Annuler</div>
+<div id="confirmation-modal" class="confirmation-modal hidden absolute inset-x-1/4 flex flex-col w-fit mx-auto p-8 text-slate-700 dark:text-slate-200 bg-state-300 dark:bg-slate-700">
+    <p class="confirmation-modal_message pb-8 text-center"></p>
+    <div class="confirmation-modal_buttons flex flex-row justify-evenly">
+        <div id="confirmation-modal-confirm" class="border rounded-2xl px-3 py-2 hover:border-green-500 active:text-green-500">Confirmer</div>
+        <div id="confirmation-modal-cancel" class="border rounded-2xl px-3 py-2 hover:border-red-500 active:text-red-500">Annuler</div>
     </div>
 </div>
