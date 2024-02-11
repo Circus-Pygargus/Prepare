@@ -58,11 +58,13 @@ class UserController extends AbstractController
                         $wantedRole !== 'USER' ? $userToEdit->setRoles(['ROLE_'.$wantedRole]) : $userToEdit->setRoles([]);
                         $entityManager->persist($userToEdit);
                         $entityManager->flush();
+                        $this->addFlash('success', $userToEdit->getUserIdentifier().' à maintenant le rôle '.$wantedRole);
                     }
                 }
             } catch (\Exception $exception) {
                 $logger->error($exception->getMessage());
                 $logger->Error($exception->getTraceAsString());
+                $this->addFlash('error', 'Un problème est survenu pendant l\'enregistrement');
             }
         }
 

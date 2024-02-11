@@ -5,6 +5,8 @@
 {% block body %}
     <h2>Liste des utilisateurs</h2>
 
+    {% include '_layouts/flash_message.html.twig' %}
+
     {{ form(userRoleForm) }}
     {% include '_layouts/confirmation-modal.html.twig' %}
 
