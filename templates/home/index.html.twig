@@ -3,5 +3,8 @@
 {% block title %}Prepare, accueil{% endblock %}
 
 {% block body %}
-
+    <h2>Projets</h2>
+    {% if is_granted('ROLE_CONTRIBUTOR') %}
+        <a href="/">Nouveau Projet</a>
+    {% endif %}
 {% endblock %}
