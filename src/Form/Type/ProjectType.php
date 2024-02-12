@@ -30,6 +30,7 @@ class ProjectType extends AbstractType
             ])
             ->add('comment', TextareaType::class, [
                 'label' => 'Commentaire',
+                'required' => false,
                 'trim' => true,
             ])
             ->add('contributors', EntityType::class, [
