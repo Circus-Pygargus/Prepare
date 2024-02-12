@@ -10,7 +10,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20240212112921_insert_admin extends AbstractMigration
+final class Version20240212175500_insert_admin extends AbstractMigration
 {
     public function getDescription(): string
     {
@@ -19,8 +19,8 @@ final class Version20240212112921_insert_admin extends AbstractMigration
 
     public function up(Schema $schema): void
     {
-        $this->addSql('INSERT INTO user (username, password, roles, created_at)
-              VALUES ("Riri", "$2y$13$AZbTJLOKQRwT5DQLGHJOleoK6aMcl0FYO/LwG.0CqMJyBBUKCgNz.", \'["ROLE_ADMIN"]\', NOW())');
+        $this->addSql('INSERT INTO user (username, password, roles, is_active, created_at)
+              VALUES ("Riri", "$2y$13$AZbTJLOKQRwT5DQLGHJOleoK6aMcl0FYO/LwG.0CqMJyBBUKCgNz.", \'["ROLE_ADMIN"]\', true, NOW())');
 
     }
 
