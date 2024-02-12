@@ -22,7 +22,7 @@
                 {% if is_granted('IS_AUTHENTICATED_FULLY') %}
                     <a class="absolute right-8 inset-y-8 text-base" href="{{ path('app_logout') }}">Déconnexion</a>
                 {% else %}
-                    <a class="text-2xl" href="{{ path('app_login') }}">Connexion</a>
+                    <a class="absolute right-8 inset-y-8 text-base" href="{{ path('app_login') }}">Connexion</a>
                 {% endif %}
             </div>
         </header>
