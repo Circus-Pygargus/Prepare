@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
@@ -16,6 +18,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function __construct()
     {
         $this->createdAt = new \DateTimeImmutable();
+        $this->ownedProjects = new ArrayCollection();
+        $this->contributedProjects = new ArrayCollection();
+        $this->categories = new ArrayCollection();
+        $this->items = new ArrayCollection();
     }
 
     #[ORM\Id]
@@ -44,6 +50,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column]
     private ?\DateTimeImmutable $createdAt = null;
+
+    #[ORM\OneToMany(targetEntity: Project::class, mappedBy: 'createdBy')]
+    private Collection $ownedProjects;
+
+    #[ORM\ManyToMany(targetEntity: Project::class, mappedBy: 'contributors')]
+    private Collection $contributedProjects;
+
+    #[ORM\OneToMany(targetEntity: Category::class, mappedBy: 'createdBy')]
+    private Collection $categories;
+
+    #[ORM\OneToMany(targetEntity: Item::class, mappedBy: 'createdBy')]
+    private Collection $items;
 
     public function getId(): ?int
     {
@@ -123,6 +141,123 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setCreatedAt(\DateTimeImmutable $createdAt): static
     {
         $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Project>
+     */
+    public function getOwnedProjects(): Collection
+    {
+        return $this->ownedProjects;
+    }
+
+    public function addOwnedProject(Project $ownedProject): static
+    {
+        if (!$this->ownedProjects->contains($ownedProject)) {
+            $this->ownedProjects->add($ownedProject);
+            $ownedProject->setCreatedBy($this);
+        }
+
+        return $this;
+    }
+
+    public function removeOwnedProject(Project $ownedProject): static
+    {
+        if ($this->ownedProjects->removeElement($ownedProject)) {
+            // set the owning side to null (unless already changed)
+            if ($ownedProject->getCreatedBy() === $this) {
+                $ownedProject->setCreatedBy(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Project>
+     */
+    public function getContributedProjects(): Collection
+    {
+        return $this->contributedProjects;
+    }
+
+    public function addContributedProject(Project $contributedProject): static
+    {
+        if (!$this->contributedProjects->contains($contributedProject)) {
+            $this->contributedProjects->add($contributedProject);
+            $contributedProject->addContributor($this);
+        }
+
+        return $this;
+    }
+
+    public function removeContributedProject(Project $contributedProject): static
+    {
+        if ($this->contributedProjects->removeElement($contributedProject)) {
+            $contributedProject->removeContributor($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Category>
+     */
+    public function getCategories(): Collection
+    {
+        return $this->categories;
+    }
+
+    public function addCategory(Category $category): static
+    {
+        if (!$this->categories->contains($category)) {
+            $this->categories->add($category);
+            $category->setCreatedBy($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCategory(Category $category): static
+    {
+        if ($this->categories->removeElement($category)) {
+            // set the owning side to null (unless already changed)
+            if ($category->getCreatedBy() === $this) {
+                $category->setCreatedBy(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Item>
+     */
+    public function getItems(): Collection
+    {
+        return $this->items;
+    }
+
+    public function addItem(Item $item): static
+    {
+        if (!$this->items->contains($item)) {
+            $this->items->add($item);
+            $item->setCreatedBy($this);
+        }
+
+        return $this;
+    }
+
+    public function removeItem(Item $item): static
+    {
+        if ($this->items->removeElement($item)) {
+            // set the owning side to null (unless already changed)
+            if ($item->getCreatedBy() === $this) {
+                $item->setCreatedBy(null);
+            }
+        }
 
         return $this;
     }
