@@ -17,7 +17,7 @@
         <header>
             <div class="relative p-4">
                 <h1 class=" text-center text-6xl">
-                    <a href="/">Prepare</a>
+                    <a href="{{ path('app_home') }}">Prepare</a>
                 </h1>
                 {% if is_granted('IS_AUTHENTICATED_FULLY') %}
                     <a class="absolute right-8 inset-y-8 text-base" href="{{ path('app_logout') }}">Déconnexion</a>
