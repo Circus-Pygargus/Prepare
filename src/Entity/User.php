@@ -63,6 +63,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(targetEntity: Item::class, mappedBy: 'createdBy')]
     private Collection $items;
 
+    #[ORM\Column(options: ["default" => false])]
+    private ?bool $isActive = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -258,6 +261,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
                 $item->setCreatedBy(null);
             }
         }
+
+        return $this;
+    }
+
+    public function isIsActive(): ?bool
+    {
+        return $this->isActive;
+    }
+
+    public function setIsActive(bool $isActive): static
+    {
+        $this->isActive = $isActive;
 
         return $this;
     }
