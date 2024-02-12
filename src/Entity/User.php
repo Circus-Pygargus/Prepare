@@ -22,6 +22,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->contributedProjects = new ArrayCollection();
         $this->categories = new ArrayCollection();
         $this->items = new ArrayCollection();
+        $this->isActive = true;
     }
 
     #[ORM\Id]
