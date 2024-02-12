@@ -3,8 +3,24 @@
 {% block title %}Prepare, accueil{% endblock %}
 
 {% block body %}
-    <h2>Projets</h2>
-    {% if is_granted('ROLE_CONTRIBUTOR') %}
-        <a href="/">Nouveau Projet</a>
+    {% if false == is_granted('IS_AUTHENTICATED_FULLY') %}
+        Connecte toi pour avoir accès.
+    {% else %}
+        <div>Salut {{ app.user.username }}</div>
+        {% if is_granted('ROLE_CONTRIBUTOR') %}
+            <a href="/">Nouveau Projet</a>
+        {% endif %}
+        <h2>Projets créés</h2>
+        {% for project in ownedProjects %}
+            <a href="/">{{ project.name }}</a>
+        {% else %}
+            <div>Tu n'as pas créé de projet.</div>
+        {% endfor %}
+        <h2>Projets auxquels tu participes</h2>
+        {% for project in availableProjects %}
+            <a href="/">{{ project.name }}</a>
+        {% else %}
+            <div>Tu ne participes à aucun projet.</div>
+        {% endfor %}
     {% endif %}
 {% endblock %}

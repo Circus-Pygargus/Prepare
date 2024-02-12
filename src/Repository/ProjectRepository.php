@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Project;
+use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -45,4 +46,16 @@ class ProjectRepository extends ServiceEntityRepository
 //            ->getOneOrNullResult()
 //        ;
 //    }
+
+    public function findAvailableForUser(User $user): array
+    {
+        return $this->createQueryBuilder('p')
+        ->leftJoin('p.contributors', 'c')
+        ->andWhere('c.id = :val')
+        ->setParameter('val', $user)
+        ->orderBy('p.id', 'ASC')
+        ->setMaxResults(10)
+        ->getQuery()
+        ->getResult();
+    }
 }
