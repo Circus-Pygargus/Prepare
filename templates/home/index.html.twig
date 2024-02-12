@@ -8,7 +8,7 @@
     {% else %}
         <div>Salut {{ app.user.username }}</div>
         {% if is_granted('ROLE_CONTRIBUTOR') %}
-            <a href="/">Nouveau Projet</a>
+            <a href="{{ path('app_project_create') }}">Nouveau Projet</a>
         {% endif %}
         <h2>Projets créés</h2>
         {% for project in ownedProjects %}

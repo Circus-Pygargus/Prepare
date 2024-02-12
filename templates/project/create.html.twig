@@ -1,0 +1,9 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Création projet{% endblock %}
+
+{% block body %}
+    <h2 class="text-center block text-2xl my-16 sm:text-3xl font-bold text-amber-600 tracking-wide dark:text-amber-600">Nouveau projet</h2>
+
+    {{ form(projectForm) }}
+{% endblock %}
