@@ -5,4 +5,10 @@
 {% block body %}
     <h2 class="text-center block text-2xl my-16 sm:text-3xl font-bold text-amber-600 tracking-wide dark:text-amber-600">{{ project.name }}</h2>
     <p>{{ project.comment }}</p>
+    <h3>Participants</h3>
+    {% for contributor in project.contributors %}
+        <div>{{ contributor.username }}</div>
+    {% else %}
+        <div>T'es tout seul pour l'instant, tu veux inviter quelqu'un ?</div>
+    {% endfor %}
 {% endblock %}
