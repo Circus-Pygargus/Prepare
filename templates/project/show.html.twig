@@ -3,9 +3,13 @@
 {% block title %}{{ project.name }}{% endblock %}
 
 {% block body %}
+    {{ include('_layouts/flash_message.html.twig') }}
     <h2 class="text-center block text-2xl my-16 sm:text-3xl font-bold text-amber-600 tracking-wide dark:text-amber-600">{{ project.name }}</h2>
     <p>{{ project.comment }}</p>
     <h3>Participants</h3>
+    <button id="contributors-form-activator">Modifier</button>
+    {{ include('/project/_layouts/contributors-form.html.twig', { 'contributorsForm': contributorsForm }) }}
+
     {% for contributor in project.contributors %}
         <div>{{ contributor.username }}</div>
     {% else %}
@@ -17,4 +21,11 @@
     {% else %}
         <div>Il n'y a pas encore de catégorie, t'en crées une ?
     {% endfor %}
+{% endblock %}
+
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('flash-message') }}
+    {{ encore_entry_script_tags('project') }}
 {% endblock %}

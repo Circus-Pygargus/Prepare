@@ -9,6 +9,7 @@
     {% if false == is_granted('IS_AUTHENTICATED_FULLY') %}
         Connecte toi pour avoir accès.
     {% else %}
+        {{ include('_layouts/flash_message.html.twig') }}
         <div>Salut {{ app.user.username }}</div>
         {% if app.user.isActive == false %}
             <div>Ton compte n'est pas activé, faut voir ça avec l'admin ...</div>
@@ -30,4 +31,9 @@
             {% endfor %}
         {% endif %}
     {% endif %}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('flash-message') }}
 {% endblock %}

@@ -110,6 +110,13 @@ class Project
         return $this->contributors;
     }
 
+    public function setContributors(Collection $contributors): static
+    {
+        $this->contributors = $contributors;
+
+        return $this;
+    }
+
     public function addContributor(User $contributor): static
     {
         if (!$this->contributors->contains($contributor)) {
