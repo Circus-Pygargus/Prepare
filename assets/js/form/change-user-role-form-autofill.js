@@ -1,5 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const formToAutoFill = document.querySelector('form[name="change_user_role"]');
+    const formName = 'change_user_role';
+    const formToAutoFill = document.querySelector('form[name="'+formName+'"]');
 
     if (formToAutoFill) {
         const autoFillFormBtns = document.querySelectorAll('.user-role-form-activator');
@@ -20,6 +21,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const roleWanted = activatorBtn.dataset.roleWanted;
             formToAutoFill.querySelector('#change_user_role_username').value = username;
             formToAutoFill.querySelector('#change_user_role_wantedBiggestRole').value = roleWanted;
+            confirmationModalConfirmBtn.dataset.formName = formName;
             openConfirmationModal(username, roleWanted);
         };
 
@@ -32,15 +34,17 @@ document.addEventListener('DOMContentLoaded', () => {
             activatorBtn.addEventListener('click', formActivatorBtnClicked);
         });
 
-        const sendForm = () => {
-            formToAutoFill.submit();
+        const sendForm = (btnClicked) => {
+            document.querySelector('form[name="'+btnClicked.dataset.formName+'"]').submit();
         };
 
         const hideConfirmationModal = () => {
             confirmationModal.classList.add('hidden');
         };
 
-        confirmationModalConfirmBtn.addEventListener('click', sendForm);
+        confirmationModalConfirmBtn.addEventListener('click', (event) => {
+            sendForm(event.target);
+        } );
 
         confirmationModalCancelBtn.addEventListener('click', hideConfirmationModal);
     }
