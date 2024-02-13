@@ -9,7 +9,13 @@ document.addEventListener('DOMContentLoaded', () => {
         const confirmationModalCancelBtn = confirmationModal.querySelector('#confirmation-modal-cancel');
 
         const formActivatorBtnClicked = (event) => {
-            const activatorBtn = event.target;
+            const clickedElement = event.target;
+            let activatorBtn;
+            if (!clickedElement.classList.contains('user-role-form-activator')) {
+                activatorBtn = clickedElement.closest('.user-role-form-activator');
+            } else {
+                activatorBtn = clickedElement;
+            }
             const username = activatorBtn.dataset.name;
             const roleWanted = activatorBtn.dataset.roleWanted;
             formToAutoFill.querySelector('#change_user_role_username').value = username;
@@ -18,7 +24,7 @@ document.addEventListener('DOMContentLoaded', () => {
         };
 
         const openConfirmationModal = (username, wantedRole) => {
-            confirmationModalMessageDisplayer.innerHTML = `T'es vraiment sûr de vouloir réattribuer le rôle ${wantedRole} à ${username} ?`;
+            confirmationModalMessageDisplayer.innerHTML = `T'es vraiment sûr de vouloir attribuer le rôle ${wantedRole} à ${username} ?`;
             confirmationModal.classList.remove('hidden');
         };
 

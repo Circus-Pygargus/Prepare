@@ -15,7 +15,6 @@
             <tr>
                 <th class="p-4 border-y border-b-2 border-slate-600">Pseudo</th>
                 <th class="p-4 border-y border-b-2 border-slate-600">Rôle</th>
-                <th class="p-4 border-y border-b-2 border-slate-600">Action</th>
             </tr>
         </thead>
         <tbody>
@@ -23,13 +22,23 @@
                 {% set biggestRole = user.roles|first|replace({'ROLE_': ''})|lower|capitalize %}
             <tr>
                 <td class="p-4 border-y border-slate-700">{{ user.username }}</td>
-                <td class="p-4 border-y border-slate-700">{{ biggestRole }}</td>
-                <td class="p-4 border-y border-slate-700 hover:text-orange-400">
+                <td class="p-4 border-y border-slate-700">
+                    {{ biggestRole }}
                     {% if (biggestRole == 'Contributor') %}
-                        <div class="user-role-form-activator cursor-pointer" data-name="{{ user.username }}" data-role-wanted="USER">Supprimer le rôle Contributor</div>
+                        <span class="user-role-form-activator inline-block cursor-pointer" data-name="{{ user.username }}" data-role-wanted="USER" title="Supprimer le rôle Contributor">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4 text-slate-400 hover:text-amber-600">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 5.25 7.5 7.5 7.5-7.5m-15 6 7.5 7.5 7.5-7.5" />
+                            </svg>
+                        </span>
                     {% elseif biggestRole == 'User' %}
-                        <div class="user-role-form-activator cursor-pointer" data-name="{{ user.username }}" data-role-wanted="CONTRIBUTOR">Ajouter le rôle Contributor</div>
+                        <span class="user-role-form-activator inline-block cursor-pointer" data-name="{{ user.username }}" data-role-wanted="CONTRIBUTOR" title="Ajouter le rôle Contributor">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4 text-slate-400 hover:text-amber-600">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 18.75 7.5-7.5 7.5 7.5" />
+                                <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 7.5-7.5 7.5 7.5" />
+                            </svg>
+                        </span>
                     {% endif %}
+                </td>
             <tr>
             {% endfor %}
         </tbody>
