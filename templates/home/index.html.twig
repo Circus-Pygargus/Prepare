@@ -3,6 +3,9 @@
 {% block title %}Prepare, accueil{% endblock %}
 
 {% block body %}
+    {% if is_granted('ROLE_ADMIN') %}
+        <a href="{{ path('admin_user_list') }}">Liste des utilisateurs</a>
+    {% endif %}
     {% if false == is_granted('IS_AUTHENTICATED_FULLY') %}
         Connecte toi pour avoir accès.
     {% else %}
