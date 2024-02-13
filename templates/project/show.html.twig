@@ -11,4 +11,10 @@
     {% else %}
         <div>T'es tout seul pour l'instant, tu veux inviter quelqu'un ?</div>
     {% endfor %}
+    <h3>Catégories</h3>
+    {% for category in project.categories %}
+        <div>{{ category.name }}</div>
+    {% else %}
+        <div>Il n'y a pas encore de catégorie, t'en crées une ?
+    {% endfor %}
 {% endblock %}
