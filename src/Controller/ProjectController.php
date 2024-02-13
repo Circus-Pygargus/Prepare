@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Project;
 use App\Form\Type\ProjectType;
+use App\Service\String\Slugger;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -16,6 +17,7 @@ class ProjectController extends AbstractController
     public function create(
         Request $request,
         EntityManagerInterface $entityManager,
+        Slugger $slugger
     ): Response
     {
         $this->denyAccessUnlessGranted('ROLE_CONTRIBUTOR');
@@ -26,6 +28,7 @@ class ProjectController extends AbstractController
 
         if ($projectForm->isSubmitted() && $projectForm->isValid()) {
             $project->setCreatedBy($this->getUser());
+            $project->setSlug($slugger->slug($project->getName()));
 
             $entityManager->persist($project);
             $entityManager->flush();
