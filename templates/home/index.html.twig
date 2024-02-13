@@ -12,13 +12,13 @@
         {% endif %}
         <h2>Projets créés</h2>
         {% for project in ownedProjects %}
-            <a href="/">{{ project.name }}</a>
+            <a href="{{ path('app_project_show', {slug: project.slug }) }}", title="Voir">{{ project.name }}</a>
         {% else %}
             <div>Tu n'as pas créé de projet.</div>
         {% endfor %}
         <h2>Projets auxquels tu participes</h2>
         {% for project in availableProjects %}
-            <a href="/">{{ project.name }}</a>
+            <a href="{{ path('app_project_show', {slug: project.slug }) }}", title="Voir">{{ project.name }}</a>
         {% else %}
             <div>Tu ne participes à aucun projet.</div>
         {% endfor %}

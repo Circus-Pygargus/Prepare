@@ -40,4 +40,17 @@ class ProjectController extends AbstractController
             'projectForm' => $projectForm,
         ]);
     }
+
+    /* TODO lors de l'ajout des forms de la page (création de catégorie, ajout d'item ...)
+        penser à créer un id html sur le nouvel élément qui s'afiche dans cette page
+        et depuis la gestion du formulaire faire un
+            return  $this->redirectToRoute('app_login', ['_fragment' => 'password']);
+        ici password correspond à l'id de la balise que l'on veut afficher en haut de page */
+    #[Route('/project/show/{slug}', name: 'app_project_show', methods: ['GET'])]
+    public function show(Project $project): Response
+    {
+        return $this->render(('project/show.html.twig'), [
+            'project' => $project
+        ]);
+    }
 }
