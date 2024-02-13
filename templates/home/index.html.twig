@@ -7,20 +7,24 @@
         Connecte toi pour avoir accès.
     {% else %}
         <div>Salut {{ app.user.username }}</div>
-        {% if is_granted('ROLE_CONTRIBUTOR') %}
-            <a href="{{ path('app_project_create') }}">Nouveau Projet</a>
+        {% if app.user.isActive == false %}
+            <div>Ton compte n'est pas activé, faut voir ça avec l'admin ...</div>
+        {% else %}
+            {% if is_granted('ROLE_CONTRIBUTOR') %}
+                <a href="{{ path('app_project_create') }}">Nouveau Projet</a>
+            {% endif %}
+            <h2>Projets créés</h2>
+            {% for project in ownedProjects %}
+                <a href="{{ path('app_project_show', {slug: project.slug }) }}", title="Voir">{{ project.name }}</a>
+            {% else %}
+                <div>Tu n'as pas créé de projet.</div>
+            {% endfor %}
+            <h2>Projets auxquels tu participes</h2>
+            {% for project in availableProjects %}
+                <a href="{{ path('app_project_show', {slug: project.slug }) }}", title="Voir">{{ project.name }}</a>
+            {% else %}
+                <div>Tu ne participes à aucun projet.</div>
+            {% endfor %}
         {% endif %}
-        <h2>Projets créés</h2>
-        {% for project in ownedProjects %}
-            <a href="{{ path('app_project_show', {slug: project.slug }) }}", title="Voir">{{ project.name }}</a>
-        {% else %}
-            <div>Tu n'as pas créé de projet.</div>
-        {% endfor %}
-        <h2>Projets auxquels tu participes</h2>
-        {% for project in availableProjects %}
-            <a href="{{ path('app_project_show', {slug: project.slug }) }}", title="Voir">{{ project.name }}</a>
-        {% else %}
-            <div>Tu ne participes à aucun projet.</div>
-        {% endfor %}
     {% endif %}
 {% endblock %}
