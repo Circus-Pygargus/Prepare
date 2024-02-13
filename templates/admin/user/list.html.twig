@@ -8,6 +8,7 @@
     <h2 class="text-center block text-2xl my-16 sm:text-3xl font-bold text-amber-600 tracking-wide dark:text-amber-600">Liste des utilisateurs</h2>
 
     {{ form(userRoleForm) }}
+    {{ form(userIsActiveForm) }}
     {% include '_layouts/confirmation-modal.html.twig' %}
 
     <table class="mx-auto my-8 table-auto border-collapse border border-slate-500">
@@ -15,6 +16,7 @@
             <tr>
                 <th class="p-4 border-y border-b-2 border-slate-600">Pseudo</th>
                 <th class="p-4 border-y border-b-2 border-slate-600">Rôle</th>
+                <th class="p-4 border-y border-b-2 border-slate-600">Compte activé</th>
             </tr>
         </thead>
         <tbody>
@@ -22,7 +24,7 @@
                 {% set biggestRole = user.roles|first|replace({'ROLE_': ''})|lower|capitalize %}
             <tr>
                 <td class="p-4 border-y border-slate-700">{{ user.username }}</td>
-                <td class="p-4 border-y border-slate-700">
+                <td class="p-4 border-y border-slate-700 text-center">
                     {{ biggestRole }}
                     {% if (biggestRole == 'Contributor') %}
                         <span class="user-role-form-activator inline-block cursor-pointer" data-name="{{ user.username }}" data-role-wanted="USER" title="Supprimer le rôle Contributor">
@@ -39,6 +41,21 @@
                         </span>
                     {% endif %}
                 </td>
+                <td class="p-4 border-y border-slate-700 text-center">
+                    {% if user.isActive %}
+                        <span class="user-is-active-form-activator inline-block cursor-pointer" data-name="{{ user.username }}" data-wanted-is-active="false" title="Désactiver le compte">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4 text-green-600 hover:text-amber-600">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5" />
+                            </svg>
+                        </span>
+                    {% else %}
+                        <span class="user-is-active-form-activator inline-block cursor-pointer" data-name="{{ user.username }}" data-wanted-is-active="true" title="Activer le compte">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4 text-red-600 hover:text-amber-600">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
+                            </svg>
+                        </span>
+                    {% endif %}
+                </td>
             <tr>
             {% endfor %}
         </tbody>
@@ -47,6 +64,7 @@
 
 {% block javascripts %}
     {{ parent() }}
-    {{ encore_entry_script_tags('user-role-form-autofill') }}
     {{ encore_entry_script_tags('flash-message') }}
+    {{ encore_entry_script_tags('user-is-active-form-autofill') }}
+    {{ encore_entry_script_tags('user-role-form-autofill') }}
 {% endblock %}

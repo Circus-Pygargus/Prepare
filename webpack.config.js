@@ -21,6 +21,7 @@ Encore
      * and one CSS file (e.g. app.css) if your JavaScript imports CSS.
      */
     .addEntry('app', './assets/app.js')
+    .addEntry('user-is-active-form-autofill', './assets/js/form/change-user-is-active-form-autofill.js')
     .addEntry('user-role-form-autofill', './assets/js/form/change-user-role-form-autofill.js')
     .addEntry('flash-message', './assets/js/flash-message.js')
 
