@@ -4,6 +4,7 @@ namespace App\Form\Type;
 
 use App\Entity\Item;
 use App\Form\DataTransformer\CategoryTransformer;
+use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
@@ -11,12 +12,17 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
 class ItemType extends AbstractType
 {
-    public function __construct(private CategoryTransformer $transformer)
+    public function __construct(
+        private CategoryTransformer $transformer,
+        private Security $security,
+    )
     {
     }
 
@@ -53,7 +59,7 @@ class ItemType extends AbstractType
                 'multiple' => false,
             ])
             ->add('proposed', ChoiceType::class, [
-                'label' => 'Proposé',
+                'label' => 'Je peux fournir',
                 'choices' => [
                     'Oui' => true,
                     'Non' => false,
@@ -61,24 +67,33 @@ class ItemType extends AbstractType
                 'expanded' => true,
                 'multiple' => false,
             ])
-            ->add('owned', ChoiceType::class, [
-                'label' => 'Possédé',
-                'choices' => [
-                    'Oui' => true,
-                    'Non' => false,
-                ],
-                'expanded' => true,
-                'multiple' => false,
-            ])
-            ->add('validated', ChoiceType::class, [
-                'label' => 'Validé',
-                'choices' => [
-                    'Oui' => true,
-                    'Non' => false,
-                ],
-                'expanded' => true,
-                'multiple' => false,
-            ])
+            ->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) {
+                $form = $event->getForm();
+                $data = $event->getData();
+
+                $currentUser = $this->security->getUser();
+                if ($currentUser && $currentUser === $data->getCreatedBy()) {
+                    $form->remove('proposed');
+                    $form->add('owned', ChoiceType::class, [
+                        'label' => 'J\'ai',
+                        'choices' => [
+                            'Oui' => true,
+                            'Non' => false,
+                        ],
+                        'expanded' => true,
+                        'multiple' => false,
+                    ]);
+                    $form->add('validated', ChoiceType::class, [
+                        'label' => 'Validé',
+                        'choices' => [
+                            'Oui' => true,
+                            'Non' => false,
+                        ],
+                        'expanded' => true,
+                        'multiple' => false,
+                    ]);
+                }
+            })
             ->add('category', HiddenType::class, [
                 'required' => true,
             ])
