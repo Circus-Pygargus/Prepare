@@ -6,6 +6,7 @@
     {{ include('_layouts/flash_message.html.twig') }}
     <h2 class="text-center block text-2xl my-16 sm:text-3xl font-bold text-amber-600 tracking-wide dark:text-amber-600">{{ project.name }}</h2>
     <p>{{ project.comment }}</p>
+
     <h3>Participants</h3>
     <button id="contributors-form-activator">Modifier</button>
     {{ include('/project/_layouts/contributors-form.html.twig', { 'contributorsForm': contributorsForm }) }}
@@ -15,11 +16,14 @@
     {% else %}
         <div>T'es tout seul pour l'instant, tu veux inviter quelqu'un ?</div>
     {% endfor %}
+
     <h3>Catégories</h3>
+    <button id="add-category-form-activator">Ajouter une catégorie</button>
+    {{ include('/project/_layouts/add-category-form.html.twig', { 'addCategoryForm': addCategoryForm }) }}
     {% for category in project.categories %}
-        <div>{{ category.name }}</div>
+        <div id="{{ category.name }}">{{ category.name }}</div>
     {% else %}
-        <div>Il n'y a pas encore de catégorie, t'en crées une ?
+        <div>Il n'y a pas encore de catégorie, t'en crées une ?</div>
     {% endfor %}
 {% endblock %}
 

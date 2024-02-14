@@ -2,7 +2,9 @@
 
 namespace App\Controller;
 
+use App\Entity\Category;
 use App\Entity\Project;
+use App\Form\Type\CategoryType;
 use App\Form\Type\ProjectContributorsType;
 use App\Form\Type\ProjectType;
 use App\Service\String\Slugger;
@@ -56,9 +58,15 @@ class ProjectController extends AbstractController
             'method' => 'POST',
         ]);
 
+        $addCategoryForm = $this->createForm(CategoryType::class, null, [
+            'action' => $this->generateUrl('app_project_add_category', ['slug' => $project->getSlug()]),
+            'method' => 'POST',
+        ]);
+
         return $this->render(('project/show.html.twig'), [
             'project' => $project,
             'contributorsForm' => $contributorsForm,
+            'addCategoryForm' => $addCategoryForm,
         ]);
     }
 
@@ -99,7 +107,45 @@ class ProjectController extends AbstractController
             ]);
         }
 
-        // Good practice is cerrtainly to redirect to the page where the form was sent (project show page), but if form isn't valid, user must have made something really bad to brake it ...
+        // Good practice is certainly to redirect to the page where the form was sent (project show page), but if form isn't valid, user must have made something really bad to brake it ...
         return $this->redirectToRoute('app_home');
+    }
+
+    #[Route('/project/{slug}/add-category', name: 'app_project_add_category', methods: ['POST'])]
+    public function addCategory(
+        Request $request,
+        EntityManagerInterface $entityManager,
+        LoggerInterface $logger,
+        Project $project
+    ): Response
+    {
+        $category = new Category();
+        $categoryForm = $this->createForm(CategoryType::class, $category);
+        $categoryForm->handleRequest($request);
+
+        if ($categoryForm->isSubmitted() && $categoryForm->isValid()) {
+            try {
+                $category->setCreatedBy($this->getUser());
+                $category->setProject($project);
+                $entityManager->persist($category);
+
+                $entityManager->flush();
+                $this->addFlash('success', 'La catégorie '.$category->getName().' a bien été enregistrée.');
+            } catch (\Exception $e) {
+                $logger->error($e->getMessage());
+                $logger->Error($e->getTraceAsString());
+                $this->addFlash('error', 'Un problème est survenu pendant l\'enregistrement');
+            }
+
+            return $this->redirectToRoute('app_project_show', [
+                'slug' => $project->getSlug(),
+                '_fragment' =>$category->getName() // Will redirect to the wanted page's anchor
+            ]);
+        }
+
+        return $this->redirectToRoute('app_project_show', [
+            'slug' => $project->getSlug(),
+            '_fragment' => 'category'
+        ]);
     }
 }
