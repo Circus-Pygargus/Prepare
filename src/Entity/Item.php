@@ -18,7 +18,7 @@ class Item
     private ?string $name = null;
 
     #[ORM\Column(nullable: true)]
-    private ?int $quantity = null;
+    private ?string $quantity = null;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $comment = null;
@@ -68,12 +68,12 @@ class Item
         return $this;
     }
 
-    public function getQuantity(): ?int
+    public function getQuantity(): ?string
     {
         return $this->quantity;
     }
 
-    public function setQuantity(?int $quantity): static
+    public function setQuantity(?string $quantity): static
     {
         $this->quantity = $quantity;
 
