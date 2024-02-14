@@ -4,36 +4,56 @@
 
 {% block body %}
     {{ include('_layouts/flash_message.html.twig') }}
-    <h2 class="text-center block text-2xl my-16 sm:text-3xl font-bold text-amber-600 tracking-wide dark:text-amber-600">{{ project.name }}</h2>
-    <p>{{ project.comment }}</p>
+    <h2 class="text-center block text-2xl my-2 sm:text-3xl font-bold text-amber-600 tracking-wide dark:text-amber-600">
+        {{ project.name }}
+    </h2>
+    <p class="pl-16">{{ project.comment }}</p>
 
-    <h3>Participants</h3>
-    <button id="contributors-form-activator">Modifier</button>
-    {{ include('/project/_layouts/contributors-form.html.twig', { 'contributorsForm': contributorsForm }) }}
+    <div class="relative min-h-32 mt-12 px-4">
+        <h3 class="pb-8 text-xl font-semibold text-slate-300">Participants</h3>
+        <button id="contributors-form-activator" class="absolute top-4 right-4 px-4 py-2 font-semibold text-sm rounded-full border border-slate-300 hover:border-amber-600 text-slate-300 active:text-amber-600">
+            Modifier
+        </button>
+        {{ include('/project/_layouts/contributors-form.html.twig', { 'contributorsForm': contributorsForm }) }}
 
-    {% for contributor in project.contributors %}
-        <div>{{ contributor.username }}</div>
-    {% else %}
-        <div>T'es tout seul pour l'instant, tu veux inviter quelqu'un ?</div>
-    {% endfor %}
-
-    <h3>Catégories</h3>
-    <button id="add-category-form-activator">Ajouter une catégorie</button>
-    {{ include('/project/_layouts/add-category-form.html.twig', { 'addCategoryForm': addCategoryForm }) }}
-    {{ include('/item/_layouts/edit-form.html.twig', { 'addItemForm': addItemForm }) }}
-    {% for category in project.categories %}
-        <div>
-            <div id="{{ category.name }}">{{ category.name }}</div>
-            <button class="add-item-form-activator" data-category-id="{{ category.id }}">Ajouter un objet</div>
-            {% for item in category.items %}
-                <div id="{{ category.name }}-{{ item.name }}">{{ item.name }}</div>
+        <div class="px-8">
+            {% for contributor in project.contributors %}
+                <div class="text-slate-400">{{ contributor.username }}</div>
             {% else %}
-                <div>Cette catégorie est vide, ajoute un objet</div>
+                <div class="text-slate-400">T'es tout seul pour l'instant, tu veux inviter quelqu'un ?</div>
             {% endfor %}
-        <div>
-    {% else %}
-        <div>Il n'y a pas encore de catégorie, t'en crées une ?</div>
-    {% endfor %}
+        </div>
+    </div>
+
+    <div class="relative mt-4 px-4">
+        <h3 class="pb-8 text-xl font-semibold text-slate-300">Catégories</h3>
+        <button id="add-category-form-activator" class="absolute top-4 right-4 px-4 py-2 font-semibold text-sm rounded-full border border-slate-300 hover:border-amber-600 text-slate-300 active:text-amber-600">
+            Ajouter une catégorie
+        </button>
+        {{ include('/project/_layouts/add-category-form.html.twig', { 'addCategoryForm': addCategoryForm }) }}
+        {{ include('/item/_layouts/edit-form.html.twig', { 'addItemForm': addItemForm }) }}
+        <div class="px-8">
+            {% for category in project.categories %}
+                <div>
+                    <div id="{{ category.name }}">{{ category.name }}</div>
+                    <button class="add-item-form-activator ml-4 px-2 py-1 font-semibold text-xs rounded-full border border-slate-300 hover:border-amber-600 text-slate-300 active:text-amber-600" data-category-id="{{ category.id }}">
+                        Ajouter un objet
+                    </button>
+                    <div class="px-8">
+                        {% for item in category.items %}
+                            <div>
+                                <div id="{{ category.name }}-{{ item.name }}">{{ item.name }}</div>
+                            </div>
+                        {% else %}
+                            <div>Cette catégorie est vide, ajoute un objet</div>
+                        {% endfor %}
+                    </div>
+                </div>
+            {% else %}
+                <div>Il n'y a pas encore de catégorie, t'en crées une ?</div>
+            {% endfor %}
+        </div>
+    </div>
 {% endblock %}
 
 
