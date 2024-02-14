@@ -20,8 +20,17 @@
     <h3>Catégories</h3>
     <button id="add-category-form-activator">Ajouter une catégorie</button>
     {{ include('/project/_layouts/add-category-form.html.twig', { 'addCategoryForm': addCategoryForm }) }}
+    {{ include('/item/_layouts/edit-form.html.twig', { 'addItemForm': addItemForm }) }}
     {% for category in project.categories %}
-        <div id="{{ category.name }}">{{ category.name }}</div>
+        <div>
+            <div id="{{ category.name }}">{{ category.name }}</div>
+            <button class="add-item-form-activator" data-category-id="{{ category.id }}">Ajouter un objet</div>
+            {% for item in category.items %}
+                <div id="{{ category.name }}-{{ item.name }}">{{ item.name }}</div>
+            {% else %}
+                <div>Cette catégorie est vide, ajoute un objet</div>
+            {% endfor %}
+        <div>
     {% else %}
         <div>Il n'y a pas encore de catégorie, t'en crées une ?</div>
     {% endfor %}

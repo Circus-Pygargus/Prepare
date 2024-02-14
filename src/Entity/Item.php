@@ -175,4 +175,9 @@ class Item
 
         return $this;
     }
+
+    public function getProject(): Project
+    {
+        return $this->getCategory()->getProject();
+    }
 }

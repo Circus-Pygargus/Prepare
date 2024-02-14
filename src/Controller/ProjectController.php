@@ -3,8 +3,10 @@
 namespace App\Controller;
 
 use App\Entity\Category;
+use App\Entity\Item;
 use App\Entity\Project;
 use App\Form\Type\CategoryType;
+use App\Form\Type\ItemType;
 use App\Form\Type\ProjectContributorsType;
 use App\Form\Type\ProjectType;
 use App\Service\String\Slugger;
@@ -63,10 +65,22 @@ class ProjectController extends AbstractController
             'method' => 'POST',
         ]);
 
+        $item = new Item();
+        $item->setNeeded(false)
+            ->setProposed(false)
+            ->setOwned(false)
+            ->setValidated(false);
+
+        $addItemForm = $this->createForm(ItemType::class, $item, [
+            'action' => $this->generateUrl('app_item_create'),
+            'method' => 'POST',
+        ]);
+
         return $this->render(('project/show.html.twig'), [
             'project' => $project,
             'contributorsForm' => $contributorsForm,
             'addCategoryForm' => $addCategoryForm,
+            'addItemForm' => $addItemForm,
         ]);
     }
 

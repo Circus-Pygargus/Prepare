@@ -20,5 +20,15 @@ services:
             - '../src/Entity/'
             - '../src/Kernel.php'
 
+    App\Form\DataTransformer\CategoryTransformer:
+        arguments:
+            $entityManager: '@doctrine.orm.default_entity_manager'
+
+    App\Form\Type\ItemType:
+        arguments:
+            $transformer: '@App\Form\DataTransformer\CategoryTransformer'
+        tags:
+            - { name: 'form.type' }
+
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
