@@ -1,5 +1,13 @@
 <div class="relative z-10">
     <div id="contributors-form-modal" class="contributors-form-modal hidden absolute inset-x-1/4 w-fit mx-auto p-8 text-slate-700 dark:text-slate-200 bg-state-300 dark:bg-slate-700">
-        {{ form(contributorsForm) }}
+        {{ form_start(contributorsForm) }}
+            {{ form_widget(contributorsForm) }}
+            <button type="submit" class="cancel-btn px-4 py-2 font-semibold text-sm rounded-full border border-slate-300 hover:border-amber-600 text-slate-300 active:text-amber-600">
+                Enregistrer
+            </button>
+            <button type="button" class="cancel-btn px-4 py-2 font-semibold text-sm rounded-full border border-slate-300 hover:border-amber-600 text-slate-300 active:text-amber-600" data-form="project_contributors" data-form-data="initialContributors">
+                Annuler
+            </button>
+        {{ form_end(contributorsForm) }}
     </div>
 </div>
