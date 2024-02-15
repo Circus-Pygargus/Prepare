@@ -1,0 +1,35 @@
+{#
+    use with this include and fill it with theses variables :
+        - comment : the full comment
+        - maxLength : the excerpt length
+        - addLabel : boolean, do you want to display "Commentaire:" before the comment
+        - prefix : short string, - is already added, used in dataset for js file
+        - loopIndex : use only if placed in a twig for loop, let it as it is or remove it if not in a loop, used in dataset for js file, this variable is optional
+    {% include '/_layouts/excerpt.html.twig' with { 'comment': , 'maxLength': , 'addLabel': , 'prefix': , 'loopIndex': loop.index } %}
+#}
+<div class="item-comment">
+    {% if addLabel %}
+        Commentaire :
+    {% endif %}
+    {% if comment|length > maxLength %}
+        {% set suffix = loopIndex | default('0') %}
+        <span class="excerpt" id="{{ prefix }}-excerpt-{{ suffix }}">
+            {{ comment|nl2br|slice(0, maxLength) ~ '...' }}
+            <div class="toggle-excerpt inline-block" data-target="{{ prefix }}-fullText-{{ suffix }}">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                </svg>
+            </div>
+        </span>
+        <span class="full-text hidden inline-block" id="{{ prefix }}-fullText-{{ suffix }}">
+            {{ comment|nl2br }}
+            <div class="toggle-excerpt inline-block" data-target="{{ prefix }}-excerpt-{{ suffix }}">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M15 12H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                </svg>
+            </div>
+        </span>
+    {% else %}
+        {{ comment|nl2br }}
+    {% endif %}
+</div>

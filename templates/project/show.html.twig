@@ -10,7 +10,9 @@
     <span class="pl-[calc(50%+1rem)] text-sm">Créé par {{ project.createdBy.username }}</span>
 
     {% if project.comment|length > 0 %}
-    <p class="mt-4 px-8 indent-8">{{ project.comment|nl2br }}</p>
+    <div class="mt-4 px-8 indent-8">
+        {% include '/_layouts/excerpt.html.twig' with { 'comment': project.comment, 'maxLength': 20, 'addLabel': false, 'prefix': 'pc' } %}
+    </div>
     {% endif %}
 
     <div class="relative min-h-32 mt-12 px-4">
@@ -49,30 +51,7 @@
                                 <div id="{{ category.name }}-{{ item.name }}" class="text-slate-300">{{ item.name }}</div>
 
                                 {% if item.comment %}
-                                <div class="item-comment">Commentaire :
-                                    {% set maxLength = 10 %}
-                                    {% set comment = item.comment %}
-                                    {% if comment|length > maxLength %}
-                                        <span class="excerpt" id="excerpt-{{ loop.index }}">
-                                            {{ comment|slice(0, maxLength) ~ '...' }}
-                                            <div class="toggle-excerpt inline-block" data-target="fullText-{{ loop.index }}">
-                                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
-                                                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
-                                                </svg>
-                                            </div>
-                                        </span>
-                                        <span class="full-text hidden inline-block" id="fullText-{{ loop.index }}">
-                                            {{ comment }}
-                                            <div class="toggle-excerpt inline-block" data-target="excerpt-{{ loop.index }}">
-                                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
-                                                    <path stroke-linecap="round" stroke-linejoin="round" d="M15 12H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
-                                                </svg>
-                                            </div>
-                                        </span>
-                                    {% else %}
-                                        {{ comment }}
-                                    {% endif %}
-                                </div>
+                                    {% include '/_layouts/excerpt.html.twig' with { 'comment': item.comment, 'maxLength': 15, 'addLabel': true, 'prefix': 'ic', 'loopIndex': loop.index } %}
                                 {% endif %}
 
                                 {% if item.owned %}
