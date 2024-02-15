@@ -9,6 +9,7 @@ use App\Form\Type\CategoryType;
 use App\Form\Type\ItemType;
 use App\Form\Type\ProjectContributorsType;
 use App\Form\Type\ProjectType;
+use App\Security\ProjectVoter;
 use App\Service\String\Slugger;
 use Doctrine\ORM\EntityManagerInterface;
 use Psr\Log\LoggerInterface;
@@ -16,6 +17,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 class ProjectController extends AbstractController
 {
@@ -53,6 +55,7 @@ class ProjectController extends AbstractController
             return  $this->redirectToRoute('app_login', ['_fragment' => 'password']);
         ici password correspond à l'id de la balise que l'on veut afficher en haut de page */
     #[Route('/project/show/{slug}', name: 'app_project_show', methods: ['GET'])]
+    #[IsGranted(ProjectVoter::VIEW, 'project', 'Tu n\'as pas accès à cette page', 403)]
     public function show(Project $project): Response
     {
         $contributorsForm = $this->createForm(ProjectContributorsType::class, $project, [
