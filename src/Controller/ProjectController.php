@@ -58,6 +58,7 @@ class ProjectController extends AbstractController
     #[IsGranted(ProjectVoter::VIEW, 'project', 'Tu n\'as pas accès à cette page', 403)]
     public function show(Project $project): Response
     {
+        $userCanEditProject = $this->isGranted('edit', $project);
         $contributorsForm = $this->createForm(ProjectContributorsType::class, $project, [
             'action' => $this->generateUrl('app_project_edit_contributors'),
             'method' => 'POST',
@@ -84,6 +85,7 @@ class ProjectController extends AbstractController
             'contributorsForm' => $contributorsForm,
             'addCategoryForm' => $addCategoryForm,
             'addItemForm' => $addItemForm,
+            'userCanEditProject' => $userCanEditProject,
         ]);
     }
 

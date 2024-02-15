@@ -1,13 +1,24 @@
 <div class="relative z-10">
     <div id="add-item-form-modal" class="edit_item-form-modal hidden absolute inset-x-1/4 w-fit mx-auto p-8 text-slate-700 dark:text-slate-200 bg-state-300 dark:bg-slate-700">
         {{ form_start(addItemForm) }}
-            {{ form_widget(addItemForm) }}
+            {{ form_row(addItemForm.name) }}
+            {{ form_row(addItemForm.comment) }}
+            {{ form_row(addItemForm.quantity) }}
+            {{ form_row(addItemForm.needed) }}
+            {% if userCanEditProject %}
+                {{ form_row(addItemForm.owned) }}
+                {{ form_row(addItemForm.validated) }}
+            {% else %}
+                {{ form_row(addItemForm.proposed) }}
+            {% endif %}
+            {{ form_row(addItemForm.category) }}
+            {{ form_row(addItemForm._token) }}
             <button type="submit" class="cancel-btn px-4 py-2 font-semibold text-sm rounded-full border border-slate-300 hover:border-amber-600 text-slate-300 active:text-amber-600">
                 Enregistrer
             </button>
             <button type="button" class="cancel-btn px-4 py-2 font-semibold text-sm rounded-full border border-slate-300 hover:border-amber-600 text-slate-300 active:text-amber-600" data-form="item" data-form-data="initialItem">
                 Annuler
             </button>
-        {{ form_end(addItemForm) }}
+        {{ form_end(addItemForm, {'render_rest': false}) }}
     </div>
 </div>
