@@ -33,9 +33,17 @@ class ItemController extends AbstractController
 
         $itemForm = $this->createForm(ItemType::class, $item);
         $itemForm->handleRequest($request);
+
         if ($itemForm->isSubmitted() && $itemForm->isValid()) {
             try {
                 $item->setCreatedBy($this->getUser());
+                if ($item->isProposed() === null) {
+                    $item->setProposed(false);
+                }
+                if ($item->isOwned() === null) {
+                    $item->setOwned(false)
+                        ->setValidated(false);
+                }
 
                 $entityManager->persist($item);
                 $entityManager->flush();
