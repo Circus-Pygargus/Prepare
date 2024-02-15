@@ -54,6 +54,7 @@ class ItemType extends AbstractType
                     'Oui' => true,
                     'Non' => false,
                 ],
+                'data' => false, // default value
                 'expanded' => true,
                 'multiple' => false,
             ])
@@ -63,36 +64,31 @@ class ItemType extends AbstractType
                     'Oui' => true,
                     'Non' => false,
                 ],
+                'data' => false,
+                'expanded' => true,
                 'expanded' => true,
                 'multiple' => false,
             ])
-            ->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) {
-                $form = $event->getForm();
-                $data = $event->getData();
-
-                $currentUser = $this->security->getUser();
-                if ($currentUser && $currentUser === $data->getCreatedBy()) {
-                    $form->remove('proposed');
-                    $form->add('owned', ChoiceType::class, [
-                        'label' => 'J\'ai',
-                        'choices' => [
-                            'Oui' => true,
-                            'Non' => false,
-                        ],
-                        'expanded' => true,
-                        'multiple' => false,
-                    ]);
-                    $form->add('validated', ChoiceType::class, [
-                        'label' => 'Validé',
-                        'choices' => [
-                            'Oui' => true,
-                            'Non' => false,
-                        ],
-                        'expanded' => true,
-                        'multiple' => false,
-                    ]);
-                }
-            })
+            ->add('owned', ChoiceType::class, [
+                'label' => 'J\'ai',
+                'choices' => [
+                    'Oui' => true,
+                    'Non' => false,
+                ],
+                'data' => false,
+                'expanded' => true,
+                'multiple' => false,
+            ])
+            ->add('validated', ChoiceType::class, [
+                'label' => 'Validé',
+                'choices' => [
+                    'Oui' => true,
+                    'Non' => false,
+                ],
+                'data' => false,
+                'expanded' => true,
+                'multiple' => false,
+            ])
             ->add('category', HiddenType::class, [
                 'required' => true,
             ])

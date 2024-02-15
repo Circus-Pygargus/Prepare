@@ -69,13 +69,7 @@ class ProjectController extends AbstractController
             'method' => 'POST',
         ]);
 
-        $item = new Item();
-        $item->setNeeded(false)
-            ->setProposed(false)
-            ->setOwned(false)
-            ->setValidated(false);
-
-        $addItemForm = $this->createForm(ItemType::class, $item, [
+        $addItemForm = $this->createForm(ItemType::class, null, [
             'action' => $this->generateUrl('app_item_create'),
             'method' => 'POST',
         ]);
