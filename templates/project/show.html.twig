@@ -9,7 +9,9 @@
     </h2>
     <span class="pl-[calc(50%+1rem)] text-sm">Créé par {{ project.createdBy.username }}</span>
 
-    <p class="pl-16">{{ project.comment }}</p>
+    {% if project.comment|length > 0 %}
+    <p class="mt-4 px-8 indent-8">{{ project.comment|nl2br }}</p>
+    {% endif %}
 
     <div class="relative min-h-32 mt-12 px-4">
         <h3 class="pb-8 text-xl font-semibold text-slate-300">Participants</h3>
