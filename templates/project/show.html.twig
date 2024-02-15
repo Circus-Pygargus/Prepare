@@ -41,8 +41,51 @@
                     </button>
                     <div class="px-8">
                         {% for item in category.items %}
-                            <div>
-                                <div id="{{ category.name }}-{{ item.name }}">{{ item.name }}</div>
+                            <div class="mt-4 p-2 border border-slate-500 rounded-2xl shadow-md shadow-slate-700">
+                                <div id="{{ category.name }}-{{ item.name }}" class="text-slate-300">{{ item.name }}</div>
+
+                                {% if item.comment %}
+                                <div class="item-comment">Commentaire :
+                                    {% set maxLength = 10 %}
+                                    {% set comment = item.comment %}
+                                    {% if comment|length > maxLength %}
+                                        <span class="excerpt" id="excerpt-{{ loop.index }}">
+                                            {{ comment|slice(0, maxLength) ~ '...' }}
+                                            <div class="toggle-excerpt inline-block" data-target="fullText-{{ loop.index }}">
+                                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                                                </svg>
+                                            </div>
+                                        </span>
+                                        <span class="full-text hidden inline-block" id="fullText-{{ loop.index }}">
+                                            {{ comment }}
+                                            <div class="toggle-excerpt inline-block" data-target="excerpt-{{ loop.index }}">
+                                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" d="M15 12H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                                                </svg>
+                                            </div>
+                                        </span>
+                                    {% else %}
+                                        {{ comment }}
+                                    {% endif %}
+                                </div>
+                                {% endif %}
+
+                                {% if item.owned %}
+                                    <div>{{ item.createdBy.username }} en a {{ item.quantity }}</div>
+                                {% else %}
+                                    <div>Quantité : {{ item.quantity }}</div>
+                                {% endif %}
+
+                                {% if item.proposed %}
+                                <div>Fourni par {{ item.createdBy.username }}</div>
+                                {% endif %}
+
+                                <div>Nécessaire : {{ item.needed ? 'Oui' : 'Non' }}</div>
+
+                                {% if item.validated %}
+                                <div>Validé</div>
+                                {% endif %}
                             </div>
                         {% else %}
                             <div>Cette catégorie est vide, ajoute un objet</div>

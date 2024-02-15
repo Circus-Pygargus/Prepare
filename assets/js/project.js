@@ -9,6 +9,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const formDataObjects = [];
     const cancelFormBtns = document.querySelectorAll('.cancel-btn');
 
+    const toggleExcerptbtns = document.querySelectorAll('.toggle-excerpt');
+
     const resetForm = (form, initialData) => {
         form.querySelectorAll('input:not([type="hidden"]), select:not([type="hidden"]), textarea')
             .forEach(field => {
@@ -109,4 +111,18 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         });
     }
+
+    toggleExcerptbtns.forEach(btn => {
+        btn.addEventListener('click', (event) => {
+            const parentSpan = event.target.closest('div.item-comment');
+            const excerptElement = parentSpan.querySelector('.excerpt');
+            const fullTextElement = parentSpan.querySelector('.full-text');
+
+            if (excerptElement && fullTextElement) {
+                excerptElement.classList.toggle('hidden');
+                fullTextElement.classList.toggle('hidden');
+            }
+        });
+    });
+
 });
