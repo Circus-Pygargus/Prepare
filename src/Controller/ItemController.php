@@ -34,6 +34,9 @@ class ItemController extends AbstractController
         $itemForm = $this->createForm(ItemType::class, $item);
         $itemForm->handleRequest($request);
 
+        $project = $item->getProject();
+        $userCanEditProject = $this->isGranted('edit', $project);
+
         if ($itemForm->isSubmitted() && $itemForm->isValid()) {
             try {
                 $item->setCreatedBy($this->getUser());
@@ -51,6 +54,7 @@ class ItemController extends AbstractController
 
                 return $this->redirectToRoute('app_project_show', [
                     'slug' => $item->getProject()->getSlug(),
+                    'userCanEditProject' => $userCanEditProject,
                     '_fragment' => $item->getCategory()->getName().'-'.$item->getName(),
                 ]);
             } catch (\Exception $e) {
@@ -63,6 +67,7 @@ class ItemController extends AbstractController
         return $this->render('/item/edit.html.twig', [
             'item' => $item,
             'editItemForm' => $itemForm,
+            'userCanEditProject' => $userCanEditProject,
         ]);
     }
 }
