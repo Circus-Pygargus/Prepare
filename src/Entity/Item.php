@@ -28,16 +28,16 @@ class Item
     private ?Category $category = null;
 
     #[ORM\Column]
-    private ?bool $needed = null;
+    private ?bool $needed = false;
 
     #[ORM\Column]
-    private ?bool $proposed = null;
+    private ?bool $proposed = false;
 
     #[ORM\Column]
-    private ?bool $owned = null;
+    private ?bool $owned = false;
 
     #[ORM\Column]
-    private ?bool $validated = null;
+    private ?bool $validated = false;
 
     #[ORM\Column]
     private ?\DateTimeImmutable $createdAt = null;
