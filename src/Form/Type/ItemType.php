@@ -54,7 +54,6 @@ class ItemType extends AbstractType
                     'Oui' => true,
                     'Non' => false,
                 ],
-                'data' => false, // default value
                 'expanded' => true,
                 'multiple' => false,
             ])
@@ -64,7 +63,6 @@ class ItemType extends AbstractType
                     'Oui' => true,
                     'Non' => false,
                 ],
-                'data' => false,
                 'expanded' => true,
                 'expanded' => true,
                 'multiple' => false,
@@ -75,7 +73,6 @@ class ItemType extends AbstractType
                     'Oui' => true,
                     'Non' => false,
                 ],
-                'data' => false,
                 'expanded' => true,
                 'multiple' => false,
             ])
@@ -85,7 +82,6 @@ class ItemType extends AbstractType
                     'Oui' => true,
                     'Non' => false,
                 ],
-                'data' => false,
                 'expanded' => true,
                 'multiple' => false,
             ])
