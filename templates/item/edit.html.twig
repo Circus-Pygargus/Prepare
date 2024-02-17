@@ -6,3 +6,8 @@
     <h2>Modifie l'objet {{ item.name }}</h2>
     {% include '/item/_layouts/edit-form.html.twig' with { 'editItemForm': editItemForm, 'hidden': false, 'projectSlug': projectSlug } %}
 {% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('form-field-help-shower') }}
+{% endblock %}
