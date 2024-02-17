@@ -6,6 +6,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
 class ChangeUserIsActiveType extends AbstractType
 {
@@ -13,8 +14,14 @@ class ChangeUserIsActiveType extends AbstractType
     {
         $builder
             ->add('username', TextType::class, [
-                'required' => true,
                 'label' => false,
+                'required' => true,
+                'trim' => true,
+                'constraints' => [
+                    new NotBlank([
+                        'message' => 'Tu dois entrer un pseudo.'
+                    ])
+                ],
                 'attr' => [
                     'class' => 'hidden',
                 ],

@@ -20,6 +20,12 @@ class RegistrationType extends AbstractType
             ->add('username', TextType::class, [
                 'label' => 'Pseudo',
                 'required' => true,
+                'trim' => true,
+                'constraints' => [
+                    new NotBlank([
+                        'message' => 'Tu dois entrer un pseudonyme.'
+                    ])
+                ],
             ])
             ->add('plainPassword', PasswordType::class, [
                 'label' => 'Mot de passe',

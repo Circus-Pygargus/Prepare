@@ -14,6 +14,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
 class ProjectType extends AbstractType
 {
@@ -27,6 +28,11 @@ class ProjectType extends AbstractType
                 'label' => 'Nom',
                 'required' => true,
                 'trim' => true,
+                'constraints' => [
+                    new NotBlank([
+                        'message' => 'Tu dois entrer un nom.'
+                    ])
+                ],
             ])
             ->add('comment', TextareaType::class, [
                 'label' => 'Commentaire',
