@@ -3,6 +3,7 @@
 {% block title %}{{ project.name }}{% endblock %}
 
 {% block body %}
+    {{ include('/project/_layouts/add-category-form.html.twig', { 'addCategoryForm': addCategoryForm }) }}
     <h2 class="text-center block text-2xl mt-2 sm:text-3xl font-bold text-amber-600 tracking-wide dark:text-amber-600">
         {{ project.name }}
     </h2>
@@ -35,7 +36,6 @@
         <button id="add-category-form-activator" class="absolute top-4 right-4 px-4 py-2 font-semibold text-sm rounded-full border border-slate-300 hover:border-amber-600 text-slate-300 active:text-amber-600">
             Ajouter une catégorie
         </button>
-        {{ include('/project/_layouts/add-category-form.html.twig', { 'addCategoryForm': addCategoryForm }) }}
         {{ include('/item/_layouts/edit-form.html.twig', { 'editItemForm': addItemForm, 'hidden': true, 'projectSlug': project.slug }) }}
         <div class="px-8">
             {% for category in project.categories %}

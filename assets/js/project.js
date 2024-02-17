@@ -1,4 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
+    const body = document.querySelector('body');
+    const formModals = document.querySelectorAll('.form-modal');
     const contributorsFormModal = document.querySelector('#contributors-form-modal');
     const addCategoryFormModal = document.querySelector('#add-category-form-modal');
     const addItemModal = document.querySelector('#add-item-form-modal');
@@ -23,6 +25,15 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         );
     };
+
+    formModals.forEach(formModal => {
+        formModal.addEventListener('click', (event) => {
+            if ( !formModal.classList.contains('hidden') &&!formModal.contains(event.target)) {
+                event.stopPropagation();
+                event.preventDefault();
+            }
+        });
+    });
 
     document.querySelector('form[name="project_contributors"]')
     .querySelectorAll('input:not([type="hidden"]), select:not([type="hidden"]), textarea')
@@ -72,6 +83,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     cancelFormBtns.forEach(cancelFormBtn => {
         cancelFormBtn.addEventListener('click', (event) => {
+            body.classList.remove('overflow-hidden');
             resetForm(event.target.closest('form'), formDataObjects[event.target.dataset.formData]);
             cancelFormBtn.closest('[id$="-form-modal"]').classList.add('hidden');
         });
@@ -91,7 +103,13 @@ document.addEventListener('DOMContentLoaded', () => {
         const addCategoryFormBtn = document.querySelector('#add-category-form-activator');
 
         const showAddCategoryForm = () => {
+            // const formModal = event.target.closest('.form-modal');
             addCategoryFormModal.classList.remove('hidden');
+            body.classList.add('overflow-hidden');
+            // addCategoryFormModal.scrollIntoView({
+            //     behavior: 'smooth',
+            //     block: 'start',
+            // });
         };
 
         addCategoryFormBtn.addEventListener('click', showAddCategoryForm);
