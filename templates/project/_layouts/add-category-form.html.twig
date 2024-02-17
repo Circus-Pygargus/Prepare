@@ -1,12 +1,11 @@
-<div id="add-category-form-modal" class="form-modal relative w-full h-dvh z-10 bg-slate-300 hidden">
-    {# <div class="absolute top-8 inset-x-1/4 w-fit mx-auto p-8 text-slate-700 dark:text-slate-200 bg-state-300 dark:bg-slate-700"> #}
-    <div class="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 overflow-auto p-8 text-slate-700  dark:text-slate-200 bg-state-300 dark:bg-slate-700">
+<div id="category-form-modal" class="form-modal relative w-full h-dvh z-10 bg-slate-300 hidden" data-name="category">
+    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 overflow-auto p-8 text-slate-700 dark:text-slate-200 bg-state-300 dark:bg-slate-700">
         {{ form_start(addCategoryForm) }}
             {{ form_widget(addCategoryForm) }}
             <button type="submit" class="cancel-btn px-4 py-2 font-semibold text-sm rounded-full border border-slate-300 hover:border-amber-600 text-slate-300 active:text-amber-600">
                 Enregistrer
             </button>
-            <button type="button" class="cancel-btn px-4 py-2 font-semibold text-sm rounded-full border border-slate-300 hover:border-amber-600 text-slate-300 active:text-amber-600" data-form="category" data-form-data="initialCategory">
+            <button type="button" class="cancel-btn px-4 py-2 font-semibold text-sm rounded-full border border-slate-300 hover:border-amber-600 text-slate-300 active:text-amber-600" data-form="category">
                 Annuler
             </button>
         {{ form_end(addCategoryForm) }}

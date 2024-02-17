@@ -17,7 +17,7 @@
 
     <div class="relative min-h-32 mt-12 px-4">
         <h3 class="pb-8 text-xl font-semibold text-slate-300">Participants</h3>
-        <button id="contributors-form-activator" class="absolute top-4 right-4 px-4 py-2 font-semibold text-sm rounded-full border border-slate-300 hover:border-amber-600 text-slate-300 active:text-amber-600">
+        <button class="contributors-form-activator absolute top-4 right-4 px-4 py-2 font-semibold text-sm rounded-full border border-slate-300 hover:border-amber-600 text-slate-300 active:text-amber-600">
             Modifier
         </button>
         {{ include('/project/_layouts/contributors-form.html.twig', { 'contributorsForm': contributorsForm }) }}
@@ -33,7 +33,7 @@
 
     <div class="relative mt-4 px-4">
         <h3 class="pb-8 text-xl font-semibold text-slate-300">Catégories</h3>
-        <button id="add-category-form-activator" class="absolute top-4 right-4 px-4 py-2 font-semibold text-sm rounded-full border border-slate-300 hover:border-amber-600 text-slate-300 active:text-amber-600">
+        <button class="category-form-activator absolute top-4 right-4 px-4 py-2 font-semibold text-sm rounded-full border border-slate-300 hover:border-amber-600 text-slate-300 active:text-amber-600">
             Ajouter une catégorie
         </button>
         {{ include('/item/_layouts/edit-form.html.twig', { 'editItemForm': addItemForm, 'hidden': true, 'projectSlug': project.slug }) }}
@@ -41,7 +41,7 @@
             {% for category in project.categories %}
                 <div>
                     <div id="{{ category.name }}">{{ category.name }}</div>
-                    <button class="add-item-form-activator ml-4 px-2 py-1 font-semibold text-xs rounded-full border border-slate-300 hover:border-amber-600 text-slate-300 active:text-amber-600" data-category-id="{{ category.id }}">
+                    <button class="item-form-activator ml-4 px-2 py-1 font-semibold text-xs rounded-full border border-slate-300 hover:border-amber-600 text-slate-300 active:text-amber-600" data-field-to-fill='category' data-data-to-fill="{{ category.id }}">
                         Ajouter un objet
                     </button>
                     <div class="px-8">

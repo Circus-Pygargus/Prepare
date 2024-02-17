@@ -1,9 +1,8 @@
-<div class="relative z-10">
-    <div id="add-item-form-modal" class="edit_item-form-modal absolute inset-x-1/4 w-fit mx-auto p-8 text-slate-700 dark:text-slate-200 bg-state-300 dark:bg-slate-700 {% if hidden %}hidden{% endif %}">
+<div id="item-form-modal" class="form-modal relative w-full h-dvh z-10 bg-slate-300 {% if hidden %}hidden{% endif %}" data-name="item">
+    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 overflow-auto p-8 text-slate-700  dark:text-slate-200 bg-state-300 dark:bg-slate-700">
         {{ form_start(editItemForm) }}
             {{ form_row(editItemForm.name) }}
             {{ form_row(editItemForm.comment) }}
-
             <div>
                 {{ form_label(editItemForm.quantity, 'Quantité', { 'label_attr': { 'class': 'inline-block' }}) }}
                 <i class="help-activator inline-block" data-helper-id="item_quantity_help">
@@ -13,7 +12,7 @@
                 </i>
             </div>
             <pre class="whitespace-pre-line">
-                {{ form_help(editItemForm.quantity, { 'helper_id': 'item_quantity_help', 'help_attr': { 'class': 'hidden ' }}) }}</pre>
+                {{ form_help(editItemForm.quantity, { 'helper_id': 'item_quantity_help', 'help_attr': { 'class': 'hidden ' }}) }}</pre> {# Pas d'intentation de la balise, ça enlève un espace sous form_help ! #}
             <div>
                 {{ form_errors(editItemForm.quantity) }}
                 {{ form_widget(editItemForm.quantity) }}
@@ -34,7 +33,7 @@
             <button type="submit" class="px-4 py-2 font-semibold text-sm rounded-full border border-slate-300 hover:border-amber-600 text-slate-300 active:text-amber-600">
                 Enregistrer
             </button>
-            <a href="{{ path('app_project_show', { 'slug': projectSlug }) }}" class="px-4 py-2 font-semibold text-sm rounded-full border border-slate-300 hover:border-amber-600 text-slate-300 active:text-amber-600" data-form="item" data-form-data="initialItem">
+            <a href="{{ path('app_project_show', { 'slug': projectSlug }) }}" class="px-4 py-2 font-semibold text-sm rounded-full border border-slate-300 hover:border-amber-600 text-slate-300 active:text-amber-600" data-form="item">
                 Annuler
             </a>
         {{ form_end(editItemForm, {'render_rest': false}) }}

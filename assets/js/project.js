@@ -1,20 +1,20 @@
 document.addEventListener('DOMContentLoaded', () => {
     const body = document.querySelector('body');
     const formModals = document.querySelectorAll('.form-modal');
-    const contributorsFormModal = document.querySelector('#contributors-form-modal');
-    const addCategoryFormModal = document.querySelector('#add-category-form-modal');
-    const addItemModal = document.querySelector('#add-item-form-modal');
 
-    const initialContributors = {};
-    const initialCategory = {};
-    const initialItem = {};
-    const formDataObjects = [];
+    const formNamePrefixes = ['contributors', 'category', 'item']; // Just fill here =)
+    const formInitialData = [];
+    for (const formNamePrefix of formNamePrefixes) {
+        formInitialData[formNamePrefix] = [];
+    }
+
     const cancelFormBtns = document.querySelectorAll('.cancel-btn');
+
 
     const toggleExcerptbtns = document.querySelectorAll('.toggle-excerpt');
 
     const resetForm = (form, initialData) => {
-        form.querySelectorAll('input:not([type="hidden"]), select:not([type="hidden"]), textarea')
+        form.querySelectorAll('input:not([id$="_token"]), select, textarea')
             .forEach(field => {
                 const fieldName = field.name;
                 if (field.type === 'checkbox' || field.type === 'radio') {
@@ -26,109 +26,6 @@ document.addEventListener('DOMContentLoaded', () => {
         );
     };
 
-    formModals.forEach(formModal => {
-        formModal.addEventListener('click', (event) => {
-            if ( !formModal.classList.contains('hidden') &&!formModal.contains(event.target)) {
-                event.stopPropagation();
-                event.preventDefault();
-            }
-        });
-    });
-
-    document.querySelector('form[name="project_contributors"]')
-    .querySelectorAll('input:not([type="hidden"]), select:not([type="hidden"]), textarea')
-            .forEach(field => {
-                if (field.type === 'checkbox' || field.type === 'radio') {
-                    initialContributors[field.name] = initialContributors[field.name] || [];
-                    initialContributors[field.name][field.value] = field.checked;
-                } else if (field.tagName.toLowerCase() === 'textarea') {
-                    initialContributors[field.name] = field.textContent;
-                }
-                else {
-                    initialContributors[field.name] = field.value;
-                }
-            });
-    formDataObjects.initialContributors = initialContributors;
-
-    document.querySelector('form[name="category"]')
-    .querySelectorAll('input:not([type="hidden"]), select:not([type="hidden"]), textarea')
-        .forEach(field => {
-            if (field.type === 'checkbox' || field.type === 'radio') {
-                initialCategory[field.name] = initialCategory[field.name] || [];
-                initialCategory[field.name][field.value] = field.checked;
-            } else if (field.tagName.toLowerCase() === 'textarea') {
-                initialCategory[field.name] = field.textContent;
-            }
-            else {
-                initialCategory[field.name] = field.value;
-            }
-        }
-    );
-    formDataObjects.initialCategory = initialCategory;
-
-    document.querySelector('form[name="item"]')
-        .querySelectorAll('input:not([type="hidden"]), select:not([type="hidden"]), textarea')
-            .forEach(field => {
-                if (field.type === 'checkbox' || field.type === 'radio') {
-                    initialItem[field.name] = initialItem[field.name] || [];
-                    initialItem[field.name][field.value] = field.checked;
-                } else if (field.tagName.toLowerCase() === 'textarea') {
-                    initialItem[field.name] = field.textContent;
-                }
-                else {
-                    initialItem[field.name] = field.value;
-                }
-            });
-    formDataObjects.initialItem = initialItem;
-
-    cancelFormBtns.forEach(cancelFormBtn => {
-        cancelFormBtn.addEventListener('click', (event) => {
-            body.classList.remove('overflow-hidden');
-            resetForm(event.target.closest('form'), formDataObjects[event.target.dataset.formData]);
-            cancelFormBtn.closest('[id$="-form-modal"]').classList.add('hidden');
-        });
-    });
-
-    if (contributorsFormModal) {
-        const contributorsFormBtn = document.querySelector('#contributors-form-activator');
-
-        const showContributorsForm = () => {
-            contributorsFormModal.classList.remove('hidden');
-        };
-
-        contributorsFormBtn.addEventListener('click', showContributorsForm);
-    }
-
-    if (addCategoryFormModal) {
-        const addCategoryFormBtn = document.querySelector('#add-category-form-activator');
-
-        const showAddCategoryForm = () => {
-            // const formModal = event.target.closest('.form-modal');
-            addCategoryFormModal.classList.remove('hidden');
-            body.classList.add('overflow-hidden');
-            // addCategoryFormModal.scrollIntoView({
-            //     behavior: 'smooth',
-            //     block: 'start',
-            // });
-        };
-
-        addCategoryFormBtn.addEventListener('click', showAddCategoryForm);
-    }
-
-    if (addItemModal) {
-        const addItemFormBtns = document.querySelectorAll('.add-item-form-activator');
-
-        const showEdititemForm = () => {
-            addItemModal.classList.remove('hidden');
-        };
-
-        addItemFormBtns.forEach(btn => {
-            btn.addEventListener('click', (event) => {
-                addItemModal.querySelector('#item_category').value = event.target.dataset.categoryId;
-                showEdititemForm();
-            });
-        });
-    }
 
     toggleExcerptbtns.forEach(btn => {
         btn.addEventListener('click', (event) => {
@@ -143,4 +40,62 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
+
+    cancelFormBtns.forEach(cancelFormBtn => {
+        cancelFormBtn.addEventListener('click', (event) => {
+            body.classList.remove('overflow-hidden');
+            resetForm(event.target.closest('form'), formInitialData[event.target.dataset.form]);
+            cancelFormBtn.closest('.form-modal').classList.add('hidden');
+        });
+    });
+
+
+    if (formModals) {
+        formModals.forEach(formModal => {
+            const initialData = {};
+            const showFormBtns = document.querySelectorAll('.' + formModal.dataset.name + '-form-activator');
+
+            const showForm = () => {
+                body.classList.add('overflow-hidden');
+                formModal.classList.remove('hidden');
+                formModal.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start',
+                });
+            }
+
+            formModal.querySelectorAll('input:not([id$="_token"]), select, textarea')
+                .forEach(field => {
+                    if (field.type === 'checkbox' || field.type === 'radio') {
+                        initialData[field.name] = initialData[field.name] || [];
+                        initialData[field.name][field.value] = field.checked;
+                    } else if (field.tagName.toLowerCase() === 'textarea') {
+                        initialData[field.name] = field.textContent;
+                    }
+                    else {
+                        initialData[field.name] = field.value;
+                    }
+                })
+            ;
+            formInitialData[formModal.dataset.name] = initialData;
+
+
+            showFormBtns.forEach(showFormBtn => {
+                showFormBtn.addEventListener('click', () => {
+                    // if several btns to show one form, then there's an entity relation
+                    if (showFormBtn.dataset.fieldToFill && showFormBtn.dataset.dataToFill) {
+                        formModal.querySelector('#' + formModal.dataset.name + '_' + showFormBtn.dataset.fieldToFill).value = showFormBtn.dataset.dataToFill;
+                    }
+                    showForm();
+                });
+            });
+
+            formModal.addEventListener('click', (event) => {
+                if ( !formModal.classList.contains('hidden') && !formModal.contains(event.target)) {
+                    event.stopPropagation();
+                    event.preventDefault();
+                }
+            });
+        });
+    }
 });
