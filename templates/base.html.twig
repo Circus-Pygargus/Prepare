@@ -23,7 +23,9 @@
                 {% if is_granted('IS_AUTHENTICATED_FULLY') %}
                     <a class="absolute right-8 inset-y-8 text-base" href="{{ path('app_logout') }}">Déconnexion</a>
                 {% else %}
-                    <a class="absolute right-8 inset-y-8 text-base" href="{{ path('app_login') }}">Connexion</a>
+                    {% if app.request.attributes.get('_route') not in ['app_login', 'app_registration'] %}
+                        <a class="absolute right-8 inset-y-8 text-base" href="{{ path('app_login') }}">Connexion</a>
+                    {% endif %}
                 {% endif %}
             </div>
         </header>
