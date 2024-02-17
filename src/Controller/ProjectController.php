@@ -69,7 +69,8 @@ class ProjectController extends AbstractController
             'method' => 'POST',
         ]);
 
-        $addItemForm = $this->createForm(ItemType::class, null, [
+        $item = new Item();
+        $addItemForm = $this->createForm(ItemType::class, $item, [
             'action' => $this->generateUrl('app_item_create'),
             'method' => 'POST',
         ]);
