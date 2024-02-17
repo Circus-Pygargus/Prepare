@@ -11,6 +11,8 @@
         {% block javascripts %}
             {{ encore_entry_script_tags('app') }}
             {{ encore_entry_script_tags('flash-message') }}
+            {{ encore_entry_script_tags('loading-spinner') }}
+
 {# {% block importmap %}{{ importmap('app') }}{% endblock %} #}
         {% endblock %}
     </head>
@@ -32,6 +34,7 @@
 
         <main class="p-4">
             {% include '_layouts/flash_message.html.twig' %}
+            <div id="loading-spinner" class="hidden fixed top-1/2 left-1/2 z-20 animate-spin border-4 rounded-full border-t-amber-600 w-20 h-20"></div>
             {% block body %}{% endblock %}
         </main>
     </body>
