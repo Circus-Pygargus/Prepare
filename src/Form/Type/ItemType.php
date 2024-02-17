@@ -64,7 +64,6 @@ class ItemType extends AbstractType
                     'Non' => false,
                 ],
                 'expanded' => true,
-                'expanded' => true,
                 'multiple' => false,
             ])
             ->add('owned', ChoiceType::class, [
