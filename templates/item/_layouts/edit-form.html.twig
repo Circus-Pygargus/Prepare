@@ -16,10 +16,10 @@
             </div>
             {{ form_row(editItemForm.category) }}
             {{ form_row(editItemForm._token) }}
-            <button type="submit" class="cancel-btn px-4 py-2 font-semibold text-sm rounded-full border border-slate-300 hover:border-amber-600 text-slate-300 active:text-amber-600">
+            <button type="submit" class="px-4 py-2 font-semibold text-sm rounded-full border border-slate-300 hover:border-amber-600 text-slate-300 active:text-amber-600">
                 Enregistrer
             </button>
-            <a href="{{ path('app_project_show', { 'slug': projectSlug }) }}" class="cancel-btn px-4 py-2 font-semibold text-sm rounded-full border border-slate-300 hover:border-amber-600 text-slate-300 active:text-amber-600" data-form="item" data-form-data="initialItem">
+            <a href="{{ path('app_project_show', { 'slug': projectSlug }) }}" class="px-4 py-2 font-semibold text-sm rounded-full border border-slate-300 hover:border-amber-600 text-slate-300 active:text-amber-600" data-form="item" data-form-data="initialItem">
                 Annuler
             </a>
         {{ form_end(editItemForm, {'render_rest': false}) }}
