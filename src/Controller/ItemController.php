@@ -68,6 +68,7 @@ class ItemController extends AbstractController
             'item' => $item,
             'editItemForm' => $itemForm,
             'userCanEditProject' => $userCanEditProject,
+            'projectSlug' => $project->getSlug(),
         ]);
     }
 }

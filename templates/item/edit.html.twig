@@ -4,5 +4,5 @@
 
 {% block body %}
     <h2>Modifie l'objet {{ item.name }}</h2>
-    {% include '/item/_layouts/edit-form.html.twig' with { 'editItemForm': editItemForm, 'hidden': false } %}
+    {% include '/item/_layouts/edit-form.html.twig' with { 'editItemForm': editItemForm, 'hidden': false, 'projectSlug': projectSlug } %}
 {% endblock %}

@@ -37,7 +37,7 @@
             Ajouter une catégorie
         </button>
         {{ include('/project/_layouts/add-category-form.html.twig', { 'addCategoryForm': addCategoryForm }) }}
-        {{ include('/item/_layouts/edit-form.html.twig', { 'editItemForm': addItemForm, 'hidden': true }) }}
+        {{ include('/item/_layouts/edit-form.html.twig', { 'editItemForm': addItemForm, 'hidden': true, 'projectSlug': project.slug }) }}
         <div class="px-8">
             {% for category in project.categories %}
                 <div>
