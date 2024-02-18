@@ -9,11 +9,9 @@ use Symfony\Component\Form\Exception\TransformationFailedException;
 
 class CategoryTransformer implements DataTransformerInterface
 {
-    private $entityManager;
 
-    public function __construct(EntityManagerInterface $entityManager)
+    public function __construct(private EntityManagerInterface $entityManager)
     {
-        $this->entityManager = $entityManager;
     }
 
     public function transform(mixed $value): mixed
