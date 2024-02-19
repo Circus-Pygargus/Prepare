@@ -59,7 +59,7 @@ class ItemController extends AbstractController
                 ]);
             } catch (\Exception $e) {
                 $logger->error($e->getMessage());
-                $logger->Error($e->getTraceAsString());
+                $logger->error($e->getTraceAsString());
                 $this->addFlash('error', 'Un problème est survenu pendant l\'enregistrement');
             }
         }

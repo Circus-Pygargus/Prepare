@@ -25,7 +25,8 @@ class ProjectController extends AbstractController
     public function create(
         Request $request,
         EntityManagerInterface $entityManager,
-        Slugger $slugger
+        Slugger $slugger,
+        LoggerInterface $logger,
     ): Response
     {
         $this->denyAccessUnlessGranted('ROLE_CONTRIBUTOR');
@@ -35,11 +36,18 @@ class ProjectController extends AbstractController
         $projectForm->handleRequest($request);
 
         if ($projectForm->isSubmitted() && $projectForm->isValid()) {
-            $project->setCreatedBy($this->getUser());
-            $project->setSlug($slugger->slug($project->getName()));
+            try {
+                $project->setCreatedBy($this->getUser());
+                $project->setSlug($slugger->slug($project->getName()));
 
-            $entityManager->persist($project);
-            $entityManager->flush();
+                $entityManager->persist($project);
+                $entityManager->flush();
+
+            } catch (\Exception $e) {
+                $logger->error($e->getMessage());
+                $logger->error($e->getTraceAsString());
+                $this->addFlash('error', 'Un problème est survenu pendant l\'enregistrement');
+            }
 
             return $this->redirectToRoute('app_home');
         }
@@ -49,11 +57,6 @@ class ProjectController extends AbstractController
         ]);
     }
 
-    /* TODO lors de l'ajout des forms de la page (création de catégorie, ajout d'item ...)
-        penser à créer un id html sur le nouvel élément qui s'afiche dans cette page
-        et depuis la gestion du formulaire faire un
-            return  $this->redirectToRoute('app_login', ['_fragment' => 'password']);
-        ici password correspond à l'id de la balise que l'on veut afficher en haut de page */
     #[Route('/project/show/{slug}', name: 'app_project_show', methods: ['GET'])]
     #[IsGranted(ProjectVoter::VIEW, 'project', 'Tu n\'as pas accès à cette page', 403)]
     public function show(Project $project): Response
@@ -100,6 +103,7 @@ class ProjectController extends AbstractController
             $project = $projectRepo->findOneBy(['slug' => $contributorsForm->get('slug')->getData()]);
 
             if (!$project) {
+                $logger->warning('l\'utilisateur '.$this->getUser()->getUserIdentifier().'tente de modifier les participants du projet '.$contributorsForm->get('slug')->getData()).'. Ce projet n\'a pas été trouvé en BDD !';
                 $this->addFlash('error', 'Un problème étrange est survenu, il semble que le projet que tu veux modifier n\'existe pas ! Merci de le signaler à l\'admin.');
 
                 return $this->redirectToRoute('app_home');
@@ -145,16 +149,16 @@ class ProjectController extends AbstractController
 
                 $entityManager->flush();
                 $this->addFlash('success', 'La catégorie '.$category->getName().' a bien été enregistrée.');
+
+                return $this->redirectToRoute('app_project_show', [
+                    'slug' => $project->getSlug(),
+                    '_fragment' =>$category->getName() // Will redirect to the wanted page's anchor
+                ]);
             } catch (\Exception $e) {
                 $logger->error($e->getMessage());
                 $logger->Error($e->getTraceAsString());
                 $this->addFlash('error', 'Un problème est survenu pendant l\'enregistrement');
             }
-
-            return $this->redirectToRoute('app_project_show', [
-                'slug' => $project->getSlug(),
-                '_fragment' =>$category->getName() // Will redirect to the wanted page's anchor
-            ]);
         }
 
         return $this->redirectToRoute('app_project_show', [
