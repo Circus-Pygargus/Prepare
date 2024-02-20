@@ -58,4 +58,30 @@ class ProjectRepository extends ServiceEntityRepository
         ->getQuery()
         ->getResult();
     }
+
+    /**
+     * Same baseSlug may have been already recorded with a numbered suffix
+     * Will return suffix number or null if none
+     *
+     * @param string $baseSlug
+     * @param string $suffixSeparator
+     * @return integer|null
+     */
+    public function findMaxSuffixValue(string $baseSlug, string $suffixSeparator = '_'): ?int
+    {
+
+        $slugLength = strlen($baseSlug);
+        $conn = $this->getEntityManager()->getConnection();
+
+        $sql = 'SELECT MAX(RIGHT(p.slug, :slugLength))
+            FROM project p
+        WHERE LEFT(p.slug, :slugLength) LIKE :baseSlug
+                AND RIGHT(p.slug, 10) REGEXP \'d+\'';
+        $resultSet = $conn->executeQuery($sql, [
+            'baseSlug' => $baseSlug.$suffixSeparator,
+            'slugLength' => $slugLength,
+        ]);
+
+        return $resultSet->fetchOne();
+    }
 }

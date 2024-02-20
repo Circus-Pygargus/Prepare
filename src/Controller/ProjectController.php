@@ -38,7 +38,7 @@ class ProjectController extends AbstractController
         if ($projectForm->isSubmitted() && $projectForm->isValid()) {
             try {
                 $project->setCreatedBy($this->getUser());
-                $project->setSlug($slugger->slug($project->getName()));
+                $project->setSlug($slugger->slug($project->getName(), Project::class));
 
                 $entityManager->persist($project);
                 $entityManager->flush();
