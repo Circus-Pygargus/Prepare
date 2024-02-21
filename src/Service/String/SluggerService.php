@@ -41,4 +41,28 @@ class SluggerService
 
         return $slug;
     }
+
+    /**
+     * $slugSource : the property name on which slug is created
+     *
+     * @param object $object
+     * @param string $slugSource
+     * @return boolean
+     */
+    public function isSlugNeeded(object $updatedObject, object $originalObject, string $slugSource = 'name'): bool
+    {
+        $isNeeded = false;
+
+        $objectId = $updatedObject->getId();
+        if ($objectId === null) {
+            $isNeeded = true;
+        } else {
+            $getterName = 'get' . ucfirst($slugSource);
+            if ($updatedObject->$getterName() !== $originalObject->$getterName()) {
+                $isNeeded = true;
+            }
+        }
+
+        return $isNeeded;
+    }
 }
