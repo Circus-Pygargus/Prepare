@@ -10,6 +10,7 @@ use App\Form\Type\ItemType;
 use App\Form\Type\ProjectContributorsType;
 use App\Form\Type\ProjectType;
 use App\Security\ProjectVoter;
+use App\Service\Entity\EntityService;
 use App\Service\String\SluggerService;
 use Doctrine\ORM\EntityManagerInterface;
 use Psr\Log\LoggerInterface;
@@ -25,21 +26,20 @@ class ProjectController extends AbstractController
     public function create(
         Request $request,
         EntityManagerInterface $entityManager,
-        SluggerService $slugger,
         LoggerInterface $logger,
+        EntityService $entityService,
     ): Response
     {
         $this->denyAccessUnlessGranted('ROLE_CONTRIBUTOR');
 
         $project = new Project();
+        $originalProject = clone $project; // Will be used when I add edit page
         $projectForm = $this->createForm(ProjectType::class, $project);
         $projectForm->handleRequest($request);
 
         if ($projectForm->isSubmitted() && $projectForm->isValid()) {
             try {
-                $project->setCreatedBy($this->getUser());
-                $slug = $slugger->slug($project->getName(), Project::class, '_');
-                $project->setSlug($slug);
+                $project = $entityService->handleCommonProperties($project, $originalProject, ['slugSource' => 'name']);
 
                 $entityManager->persist($project);
                 $entityManager->flush();
