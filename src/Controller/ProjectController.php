@@ -10,7 +10,7 @@ use App\Form\Type\ItemType;
 use App\Form\Type\ProjectContributorsType;
 use App\Form\Type\ProjectType;
 use App\Security\ProjectVoter;
-use App\Service\String\Slugger;
+use App\Service\String\SluggerService;
 use Doctrine\ORM\EntityManagerInterface;
 use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -25,7 +25,7 @@ class ProjectController extends AbstractController
     public function create(
         Request $request,
         EntityManagerInterface $entityManager,
-        Slugger $slugger,
+        SluggerService $slugger,
         LoggerInterface $logger,
     ): Response
     {

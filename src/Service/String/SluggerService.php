@@ -6,7 +6,7 @@ use App\Service\Slug\SlugService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\String\Slugger\SluggerInterface;
 
-class Slugger
+class SluggerService
 {
     public function __construct(
         private SluggerInterface $slugger,
