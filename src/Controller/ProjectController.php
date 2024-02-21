@@ -135,7 +135,8 @@ class ProjectController extends AbstractController
         Request $request,
         EntityManagerInterface $entityManager,
         LoggerInterface $logger,
-        Project $project
+        Project $project,
+        SluggerService $slugger,
     ): Response
     {
         $category = new Category();
@@ -144,6 +145,8 @@ class ProjectController extends AbstractController
 
         if ($categoryForm->isSubmitted() && $categoryForm->isValid()) {
             try {
+                $slug = $slugger->slug($category->getName(), Category::class, '_');
+                $category->setSlug($slug);
                 $category->setCreatedBy($this->getUser());
                 $category->setProject($project);
                 $entityManager->persist($category);
