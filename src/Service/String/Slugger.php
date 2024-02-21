@@ -2,6 +2,7 @@
 
 namespace App\Service\String;
 
+use App\Service\Slug\SlugService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\String\Slugger\SluggerInterface;
 
@@ -10,6 +11,7 @@ class Slugger
     public function __construct(
         private SluggerInterface $slugger,
         private EntityManagerInterface $entityManager,
+        private SlugService $slugService,
     ) {
     }
 
@@ -32,7 +34,7 @@ class Slugger
         if (!$isExistingInDb) {
             $slug = $baseSlug;
         } else {
-            $maxSuffixInDb = $objectRepo->findMaxSuffixValue($baseSlug, $suffixSeparator);
+            $maxSuffixInDb = $this->slugService->findMaxSuffixValue($baseSlug, $className, $suffixSeparator);
             $suffix = $maxSuffixInDb ? strval($maxSuffixInDb + 1) : '2';
             $slug = $baseSlug . $suffixSeparator. $suffix;
         }
