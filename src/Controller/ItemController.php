@@ -4,7 +4,6 @@ namespace App\Controller;
 
 use App\Entity\Item;
 use App\Form\Type\ItemType;
-use App\Service\String\SluggerService;
 use Doctrine\ORM\EntityManagerInterface;
 use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -20,7 +19,6 @@ class ItemController extends AbstractController
         Request $request,
         EntityManagerInterface $entityManager,
         LoggerInterface $logger,
-        SluggerService $slugger,
         int $id = null,
     ): Response
     {
@@ -41,12 +39,6 @@ class ItemController extends AbstractController
 
         if ($itemForm->isSubmitted() && $itemForm->isValid()) {
             try {
-                /** TODO !!! slug IS NOT rebuilt on edit !!! */
-                if ($id === null) {
-                    $slug = $slugger->slug($item->getName(), Item::class, '_');
-                    $item->setSlug($slug);
-                }
-
                 $item->setCreatedBy($this->getUser());
                 if ($item->isProposed() === null) {
                     $item->setProposed(false);
