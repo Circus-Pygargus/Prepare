@@ -130,6 +130,7 @@ class ProjectController extends AbstractController
     }
 
     #[Route('/project/{slug}/add-category', name: 'app_project_add_category', methods: ['POST'])]
+    #[IsGranted(ProjectVoter::VIEW, 'project', 'Tu n\'as les droits suffisants pour ceci !', 403)]
     public function addCategory(
         Request $request,
         EntityManagerInterface $entityManager,
