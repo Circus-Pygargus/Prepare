@@ -4,7 +4,6 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Form\Type\RegistrationType;
-use App\Service\String\SluggerService;
 use Doctrine\ORM\EntityManagerInterface;
 use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -21,7 +20,6 @@ class RegistrationController extends AbstractController
         UserPasswordHasherInterface $userPasswordHasher,
         EntityManagerInterface $entityManager,
         LoggerInterface $logger,
-        SluggerService $slugger,
     ): Response
     {
         $user = new User();
@@ -37,9 +35,6 @@ class RegistrationController extends AbstractController
                         $form->get('plainPassword')->getData()
                     )
                 );
-
-                $slug = $slugger->slug($user->getUsername(), User::class, '_');
-                $user->setSlug($slug);
 
                 $entityManager->persist($user);
                 $entityManager->flush();
