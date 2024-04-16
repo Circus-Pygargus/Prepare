@@ -33,13 +33,12 @@ class ProjectController extends AbstractController
         $this->denyAccessUnlessGranted('ROLE_CONTRIBUTOR');
 
         $project = new Project();
-        $originalProject = clone $project; // Will be used when I add edit page
         $projectForm = $this->createForm(ProjectType::class, $project);
         $projectForm->handleRequest($request);
 
         if ($projectForm->isSubmitted() && $projectForm->isValid()) {
             try {
-                $project = $entityService->handleCommonProperties($project, $originalProject, ['slugSource' => 'name']);
+                $project = $entityService->handleCommonProperties($project);
 
                 $entityManager->persist($project);
                 $entityManager->flush();

@@ -7,6 +7,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 #[ORM\Entity(repositoryClass: ProjectRepository::class)]
@@ -39,7 +40,8 @@ class Project
     private Collection $categories;
 
     #[ORM\Column(length: 255, unique: true)]
-    private ?string $slug = null;
+    #[Gedmo\Slug(fields: ['name'])]
+    private string $slug;
 
     public function __construct()
     {
@@ -162,15 +164,8 @@ class Project
         return $this;
     }
 
-    public function getSlug(): ?string
+    public function getSlug(): string
     {
         return $this->slug;
-    }
-
-    public function setSlug(string $slug): static
-    {
-        $this->slug = $slug;
-
-        return $this;
     }
 }
