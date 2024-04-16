@@ -87,6 +87,7 @@ class ProjectController extends AbstractController
     }
 
     #[Route('/project/edit/contributors', name: 'app_project_edit_contributors', methods: ['POST'])]
+    #[IsGranted(ProjectVoter::EDIT, 'project', 'Tu n\'as les droits suffisants pour ceci !', 403)]
     public function editContributors(
         Request $request,
         EntityManagerInterface $entityManager,

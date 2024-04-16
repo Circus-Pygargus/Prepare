@@ -17,16 +17,24 @@
 
     <div class="relative min-h-32 mt-12 px-4">
         <h3 class="pb-8 text-xl font-semibold text-slate-300">Participants</h3>
+
+        {% if userCanEditProject %}
         <button class="contributors-form-activator absolute top-4 right-4 px-4 py-2 font-semibold text-sm rounded-full border border-slate-300 hover:border-amber-600 text-slate-300 active:text-amber-600">
             Modifier
         </button>
         {{ include('/project/_layouts/contributors-form.html.twig', { 'contributorsForm': contributorsForm }) }}
+        {% endif %}
 
         <div class="px-8">
             {% for contributor in project.contributors %}
                 <div class="text-slate-400">{{ contributor.username }}</div>
             {% else %}
+                {% if userCanEditProject %}
                 <div class="text-slate-400">T'es tout seul pour l'instant, tu veux inviter quelqu'un ?</div>
+                {% else %}
+                {# Cette div ne devrait jamais être visible !! #}
+                <div class="text-slate-400">Il n'y a pas de participant pour le moment.</div>
+                {% endif %}
             {% endfor %}
         </div>
     </div>
