@@ -11,7 +11,6 @@ use App\Form\Type\ProjectContributorsType;
 use App\Form\Type\ProjectType;
 use App\Security\ProjectVoter;
 use App\Service\Entity\EntityService;
-use App\Service\String\SluggerService;
 use Doctrine\ORM\EntityManagerInterface;
 use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -135,7 +134,6 @@ class ProjectController extends AbstractController
         EntityManagerInterface $entityManager,
         LoggerInterface $logger,
         Project $project,
-        SluggerService $slugger,
     ): Response
     {
         $category = new Category();
@@ -144,8 +142,6 @@ class ProjectController extends AbstractController
 
         if ($categoryForm->isSubmitted() && $categoryForm->isValid()) {
             try {
-                $slug = $slugger->slug($category->getName(), Category::class, '_');
-                $category->setSlug($slug);
                 $category->setCreatedBy($this->getUser());
                 $category->setProject($project);
                 $entityManager->persist($category);
