@@ -41,7 +41,7 @@ class Project
 
     #[ORM\Column(length: 255, unique: true)]
     #[Gedmo\Slug(fields: ['name'])]
-    private string $slug;
+    private ?string $slug = null;
 
     public function __construct()
     {
@@ -164,7 +164,7 @@ class Project
         return $this;
     }
 
-    public function getSlug(): string
+    public function getSlug(): ?string
     {
         return $this->slug;
     }
