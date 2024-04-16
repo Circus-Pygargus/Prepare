@@ -14,17 +14,17 @@ use Symfony\Component\Routing\Attribute\Route;
 class ItemController extends AbstractController
 {
     #[Route('/item/create', name: 'app_item_create')]
-    #[Route('/item/edit/{id<\d+>}', name: 'app_item_edit')]
+    #[Route('/item/edit/{slug}', name: 'app_item_edit')]
     public function edit(
         Request $request,
         EntityManagerInterface $entityManager,
         LoggerInterface $logger,
-        int $id = null,
+        string $slug = null,
     ): Response
     {
         $itemRepo = $entityManager->getRepository(Item::class);
         /** @var Item $item */
-        $item = $id === null ?  new Item() : $itemRepo->findOneBy(['id' => $id]);
+        $item = $slug === null ?  new Item() : $itemRepo->findOneBy(['slug' => $slug]);
 
         if (!$item) {
             $this->addFlash('error', 'Quelque chose d\'étrange vient d\'arriver, l\'objet que tu veux éditer n\existe pas ! Parles en à l\'admin');
