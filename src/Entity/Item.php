@@ -42,7 +42,8 @@ class Item
     #[ORM\Column]
     private ?bool $validated = false;
 
-    #[ORM\Column]
+    #[Gedmo\Timestampable(on: 'create')]
+    #[ORM\Column(type: Types::DATETIME_IMMUTABLE)]
     private ?\DateTimeImmutable $createdAt = null;
 
     #[ORM\ManyToOne(inversedBy: 'items')]
