@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\ItemRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 #[ORM\Entity(repositoryClass: ItemRepository::class)]
@@ -49,6 +50,7 @@ class Item
     private ?User $createdBy = null;
 
     #[ORM\Column(length: 255, unique: true)]
+    #[Gedmo\Slug(fields: ['name'])]
     private ?string $slug = null;
 
     public function __construct()
@@ -189,12 +191,5 @@ class Item
     public function getSlug(): ?string
     {
         return $this->slug;
-    }
-
-    public function setSlug(string $slug): static
-    {
-        $this->slug = $slug;
-
-        return $this;
     }
 }

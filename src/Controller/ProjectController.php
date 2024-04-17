@@ -11,7 +11,6 @@ use App\Form\Type\ProjectContributorsType;
 use App\Form\Type\ProjectType;
 use App\Security\ProjectVoter;
 use App\Service\Entity\EntityService;
-use App\Service\String\SluggerService;
 use Doctrine\ORM\EntityManagerInterface;
 use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -33,13 +32,12 @@ class ProjectController extends AbstractController
         $this->denyAccessUnlessGranted('ROLE_CONTRIBUTOR');
 
         $project = new Project();
-        $originalProject = clone $project; // Will be used when I add edit page
         $projectForm = $this->createForm(ProjectType::class, $project);
         $projectForm->handleRequest($request);
 
         if ($projectForm->isSubmitted() && $projectForm->isValid()) {
             try {
-                $project = $entityService->handleCommonProperties($project, $originalProject, ['slugSource' => 'name']);
+                $project = $entityService->handleCommonProperties($project);
 
                 $entityManager->persist($project);
                 $entityManager->flush();
@@ -89,6 +87,7 @@ class ProjectController extends AbstractController
     }
 
     #[Route('/project/edit/contributors', name: 'app_project_edit_contributors', methods: ['POST'])]
+    #[IsGranted(ProjectVoter::EDIT, 'project', 'Tu n\'as les droits suffisants pour ceci !', 403)]
     public function editContributors(
         Request $request,
         EntityManagerInterface $entityManager,
@@ -131,12 +130,12 @@ class ProjectController extends AbstractController
     }
 
     #[Route('/project/{slug}/add-category', name: 'app_project_add_category', methods: ['POST'])]
+    #[IsGranted(ProjectVoter::VIEW, 'project', 'Tu n\'as les droits suffisants pour ceci !', 403)]
     public function addCategory(
         Request $request,
         EntityManagerInterface $entityManager,
         LoggerInterface $logger,
         Project $project,
-        SluggerService $slugger,
     ): Response
     {
         $category = new Category();
@@ -145,8 +144,6 @@ class ProjectController extends AbstractController
 
         if ($categoryForm->isSubmitted() && $categoryForm->isValid()) {
             try {
-                $slug = $slugger->slug($category->getName(), Category::class, '_');
-                $category->setSlug($slug);
                 $category->setCreatedBy($this->getUser());
                 $category->setProject($project);
                 $entityManager->persist($category);
