@@ -87,11 +87,11 @@ J'ai fait le choix qu'un projet ne soit visible que par ses participants afin de
 Une idée ne peut être modifiée que par son créateur et le détenteur du projet.
 
 Lors de la création d'une idée, il y a plusieurs propriétés à renseigner:<br>
-- un nom
-- un commentaire
-- un type <span style="color: red;">(reste à faire)</span> : choix à effectuer entre
+- un type : choix à effectuer entre
     - objet
     - action
+- un nom
+- un commentaire
 - un type de mesure <span style="color: red;">(reste à faire)</span><br>
 Le choix disponible est différent selon le type choisi.
     - poids, volume ou distance (je me demande si la surface pourrait avoir son utilité)
