@@ -24,7 +24,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->ownedProjects = new ArrayCollection();
         $this->contributedProjects = new ArrayCollection();
         $this->categories = new ArrayCollection();
-        $this->items = new ArrayCollection();
+        $this->ideas = new ArrayCollection();
         $this->isActive = false;
     }
 
@@ -65,8 +65,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(targetEntity: Category::class, mappedBy: 'createdBy')]
     private Collection $categories;
 
-    #[ORM\OneToMany(targetEntity: Item::class, mappedBy: 'createdBy')]
-    private Collection $items;
+    #[ORM\OneToMany(targetEntity: Idea::class, mappedBy: 'createdBy')]
+    private Collection $ideas;
 
     #[ORM\Column(options: ["default" => false])]
     private ?bool $isActive = null;
@@ -245,29 +245,29 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     }
 
     /**
-     * @return Collection<int, Item>
+     * @return Collection<int, IDea>
      */
-    public function getItems(): Collection
+    public function getIdeas(): Collection
     {
-        return $this->items;
+        return $this->ideas;
     }
 
-    public function addItem(Item $item): static
+    public function addIdea(Idea $idea): static
     {
-        if (!$this->items->contains($item)) {
-            $this->items->add($item);
-            $item->setCreatedBy($this);
+        if (!$this->ideas->contains($idea)) {
+            $this->ideas->add($idea);
+            $idea->setCreatedBy($this);
         }
 
         return $this;
     }
 
-    public function removeItem(Item $item): static
+    public function removeIdea(Idea $idea): static
     {
-        if ($this->items->removeElement($item)) {
+        if ($this->ideas->removeElement($idea)) {
             // set the owning side to null (unless already changed)
-            if ($item->getCreatedBy() === $this) {
-                $item->setCreatedBy(null);
+            if ($idea->getCreatedBy() === $this) {
+                $idea->setCreatedBy(null);
             }
         }
 

@@ -2,15 +2,15 @@
 
 namespace App\Entity;
 
-use App\Repository\ItemRepository;
+use App\Repository\IdeaRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
-#[ORM\Entity(repositoryClass: ItemRepository::class)]
-#[UniqueEntity(fields: ['slug'], message: 'Ce slug d\'item est déjà utilisé !')]
-class Item
+#[ORM\Entity(repositoryClass: IdeaRepository::class)]
+#[UniqueEntity(fields: ['slug'], message: 'Ce slug d\'idée est déjà utilisé !')]
+class Idea
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -26,7 +26,7 @@ class Item
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $comment = null;
 
-    #[ORM\ManyToOne(inversedBy: 'items')]
+    #[ORM\ManyToOne(inversedBy: 'ideas')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Category $category = null;
 
@@ -46,7 +46,7 @@ class Item
     #[ORM\Column(type: Types::DATETIME_IMMUTABLE)]
     private ?\DateTimeImmutable $createdAt = null;
 
-    #[ORM\ManyToOne(inversedBy: 'items')]
+    #[ORM\ManyToOne(inversedBy: 'ideas')]
     #[ORM\JoinColumn(nullable: false)]
     private ?User $createdBy = null;
 

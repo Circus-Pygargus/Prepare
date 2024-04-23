@@ -37,8 +37,8 @@ class Category
     #[ORM\JoinColumn(nullable: false)]
     private ?User $createdBy = null;
 
-    #[ORM\OneToMany(targetEntity: Item::class, mappedBy: 'category', orphanRemoval: true)]
-    private Collection $items;
+    #[ORM\OneToMany(targetEntity: Idea::class, mappedBy: 'category', orphanRemoval: true)]
+    private Collection $ideas;
 
     #[ORM\Column(length: 255, unique: true)]
     #[Gedmo\Slug(fields: ['name'])]
@@ -47,7 +47,7 @@ class Category
     public function __construct()
     {
         $this->createdAt = new \DateTimeImmutable();
-        $this->items = new ArrayCollection();
+        $this->ideas = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -116,29 +116,29 @@ class Category
     }
 
     /**
-     * @return Collection<int, Item>
+     * @return Collection<int, Idea>
      */
-    public function getItems(): Collection
+    public function getIdeas(): Collection
     {
-        return $this->items;
+        return $this->ideas;
     }
 
-    public function addItem(Item $item): static
+    public function addIdea(Idea $idea): static
     {
-        if (!$this->items->contains($item)) {
-            $this->items->add($item);
-            $item->setCategory($this);
+        if (!$this->ideas->contains($idea)) {
+            $this->ideas->add($idea);
+            $idea->setCategory($this);
         }
 
         return $this;
     }
 
-    public function removeItem(Item $item): static
+    public function removeIdea(Idea $idea): static
     {
-        if ($this->items->removeElement($item)) {
+        if ($this->ideas->removeElement($idea)) {
             // set the owning side to null (unless already changed)
-            if ($item->getCategory() === $this) {
-                $item->setCategory(null);
+            if ($idea->getCategory() === $this) {
+                $idea->setCategory(null);
             }
         }
 
