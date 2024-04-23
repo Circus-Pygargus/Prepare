@@ -20,6 +20,10 @@ class Idea
     #[ORM\Column(length: 255)]
     private ?string $name = null;
 
+    #[ORM\ManyToOne]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?IdeaType $type = null;
+
     #[ORM\Column(nullable: true)]
     private ?string $quantity = null;
 
@@ -72,6 +76,18 @@ class Idea
     public function setName(string $name): static
     {
         $this->name = $name;
+
+        return $this;
+    }
+
+    public function getType(): ?IdeaType
+    {
+        return $this->type;
+    }
+
+    public function setType(?IdeaType $type): static
+    {
+        $this->type = $type;
 
         return $this;
     }
