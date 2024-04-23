@@ -76,17 +76,17 @@ Seul le créateur d'un projet peut gérer le choix des personnes participantes, 
 
 Dans un projet, le créateur et les paricipants peuvent créer une catégorie.
 
-Dans une catégorie, il est possible de créer un "objet", le type de l'objet dépend du projet.<br>
-S'il s'agit d'un déménagement, alors l'objet sera effectivement un objet.
-S'il s'agit d'un voyage, l'objet pourra être quelque chose à emporter ou à acheter sur place, un lieu où dormir,  une visite à effectuer ... Il n'y a pas de limite.<br>
-S'il s'agit d'une liste de tâche, l'objet pourra être une des tâches à effectuer.<br>
-J'ai fait le choix qu'un projet ne soit visible que par ses participants afin de donner la possibilité de gérer l'organisation d'une fête surprise. Dans ce cas, un objet peut être par exemple un cadeau ou n'importe quel évènement devant avoir lieu avant ou pendant la fête.
+Dans une catégorie, il est possible d'ajouter des idées.<br>
+S'il s'agit d'un déménagement, alors l'idée sera un objet.
+S'il s'agit d'un voyage, l'idée pourra être quelque chose à emporter ou à acheter sur place, un lieu où dormir,  une visite à effectuer ... Il n'y a pas de limite.<br>
+S'il s'agit d'une liste de tâche, l'idée pourra être une des tâches à effectuer.<br>
+J'ai fait le choix qu'un projet ne soit visible que par ses participants afin de donner la possibilité de gérer l'organisation d'une fête surprise. Dans ce cas, une idée peut être par exemple un cadeau ou n'importe quel évènement devant avoir lieu avant ou pendant la fête.
 
-### Les objets
+### Les idées
 
-Un objet ne peut être modifié que par son créateur et le détenteur du projet.
+Une idée ne peut être modifiée que par son créateur et le détenteur du projet.
 
-Lors de la création d'un objet, il y a plusieurs propriétés à renseigner:<br>
+Lors de la création d'une idée, il y a plusieurs propriétés à renseigner:<br>
 - un nom
 - un commentaire
 - un type <span style="color: red;">(reste à faire)</span> : choix à effectuer entre
@@ -108,8 +108,7 @@ Les choix disponibles dépendent du type de mesure selectionné.
     - un champ texte libre en prévision de cas spéciaux, par exemple boite, paquet de 10
 
 
-Les champs suivants sont également utilisés pour chaque personne désirant interagir avec l'objet après sa création.<br>
-- pour les participants :
+Les champs suivants sont également utilisés pour chaque personne désirant interagir avec l'idée après sa création.<br>
 - une case à cocher différente selon qui interagit
     - participant : "Je peux fournir"
     - créateur du projet : "J'ai"
@@ -126,7 +125,7 @@ Le créateur du projet peut également valider un objet; Une fois fait on peut c
 
 ### Les discussions <span style="color: red;">(reste à faire)</span>
 
-Il est également possible d'ajouter des discussion aux éléments créés (projet, catégorie et projet).<br>
+Il est également possible d'ajouter des discussion aux éléments créés (projet, catégorie et idée).<br>
 
 
 ### Les "non vu" <span style="color: red;">(reste à faire)</span>
