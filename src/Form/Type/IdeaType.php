@@ -3,7 +3,9 @@
 namespace App\Form\Type;
 
 use App\Entity\Idea;
+use App\Entity\IdeaType as EntityIdeaType;
 use App\Form\DataTransformer\CategoryTransformer;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -28,6 +30,19 @@ class IdeaType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
+            ->add('type', EntityType::class, [
+                'label' => 'Type',
+                'required' => true,
+                'constraints' => [
+                    new NotBlank([
+                        'message' => 'Tu dois choisir un type d\'idée',
+                    ])
+                ],
+                'class' => EntityIdeaType::class,
+                'choice_label' => 'name',
+                'empty_data' => '',
+                'placeholder' => 'Choisis un type',
+            ])
             ->add('name', TextType::class, [
                 'label' => 'Nom',
                 'required' => true,

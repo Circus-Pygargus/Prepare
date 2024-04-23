@@ -1,6 +1,7 @@
 <div id="idea-form-modal" class="form-modal relative w-full h-dvh z-10 bg-slate-300 {% if hidden %}hidden{% endif %}" data-name="idea">
     <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 overflow-auto p-8 text-slate-700  dark:text-slate-200 bg-state-300 dark:bg-slate-700">
         {{ form_start(editIdeaForm) }}
+            {{ form_row(editIdeaForm.type) }}
             {{ form_row(editIdeaForm.name) }}
             {{ form_row(editIdeaForm.comment) }}
             <div>
