@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ idea.name }}{% endblock %}
+
+{% block body %}
+    <h2>Modifie l'idée {{ idea.name }}</h2>
+    {% include '/idea/_layouts/edit-form.html.twig' with { 'editIdeaForm': editIdeaForm, 'hidden': false, 'projectSlug': projectSlug } %}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('form-field-help-shower') }}
+{% endblock %}

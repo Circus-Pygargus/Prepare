@@ -24,7 +24,7 @@ services:
         arguments:
             $entityManager: '@doctrine.orm.default_entity_manager'
 
-    App\Form\Type\ItemType:
+    App\Form\Type\IdeaType:
         arguments:
             $transformer: '@App\Form\DataTransformer\CategoryTransformer'
         tags:

@@ -3,10 +3,10 @@
 namespace App\Controller;
 
 use App\Entity\Category;
-use App\Entity\Item;
+use App\Entity\Idea;
 use App\Entity\Project;
 use App\Form\Type\CategoryType;
-use App\Form\Type\ItemType;
+use App\Form\Type\IdeaType;
 use App\Form\Type\ProjectContributorsType;
 use App\Form\Type\ProjectType;
 use App\Security\ProjectVoter;
@@ -71,9 +71,9 @@ class ProjectController extends AbstractController
             'method' => 'POST',
         ]);
 
-        $item = new Item();
-        $addItemForm = $this->createForm(ItemType::class, $item, [
-            'action' => $this->generateUrl('app_item_create'),
+        $idea = new Idea();
+        $addIdeaForm = $this->createForm(IdeaType::class, $idea, [
+            'action' => $this->generateUrl('app_idea_create'),
             'method' => 'POST',
         ]);
 
@@ -81,7 +81,7 @@ class ProjectController extends AbstractController
             'project' => $project,
             'contributorsForm' => $contributorsForm,
             'addCategoryForm' => $addCategoryForm,
-            'addItemForm' => $addItemForm,
+            'addIdeaForm' => $addIdeaForm,
             'userCanEditProject' => $userCanEditProject,
         ]);
     }

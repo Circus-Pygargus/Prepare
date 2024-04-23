@@ -2,12 +2,12 @@
 
 namespace App\Security;
 
-use App\Entity\Item;
+use App\Entity\Idea;
 use App\Entity\User;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authorization\Voter\Voter;
 
-class ItemVoter extends Voter
+class IdeaVoter extends Voter
 {
     const EDIT = 'edit';
 
@@ -17,7 +17,7 @@ class ItemVoter extends Voter
             return false;
         }
 
-        if (!$subject instanceof Item) {
+        if (!$subject instanceof Idea) {
             return false;
         }
 
@@ -32,16 +32,16 @@ class ItemVoter extends Voter
             return false;
         }
 
-        $item = $subject;
+        $idea = $subject;
 
         return match($attribute) {
-            self::EDIT => $this->canEdit($item, $currentUser),
+            self::EDIT => $this->canEdit($idea, $currentUser),
             default => throw new \LogicException('This code should not be reached !!'),
         };
     }
 
-    private function canEdit(Item $item, User $user): bool
+    private function canEdit(Idea $idea, User $user): bool
     {
-        return $user === $item->getCreatedBy() || $user === $item->getProject()->getCreatedBy();
+        return $user === $idea->getCreatedBy() || $user === $idea->getProject()->getCreatedBy();
     }
 }

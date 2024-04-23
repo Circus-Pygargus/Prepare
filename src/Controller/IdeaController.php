@@ -2,9 +2,9 @@
 
 namespace App\Controller;
 
-use App\Entity\Item;
-use App\Form\Type\ItemType;
-use App\Security\ItemVoter;
+use App\Entity\Idea;
+use App\Form\Type\IdeaType;
+use App\Security\IdeaVoter;
 use Doctrine\ORM\EntityManagerInterface;
 use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -13,42 +13,42 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
-class ItemController extends AbstractController
+class IdeaController extends AbstractController
 {
-    #[Route('/item/create', name: 'app_item_create')]
+    #[Route('/idea/create', name: 'app_idea_create')]
     public function create(
         Request $request,
         EntityManagerInterface $entityManager,
         LoggerInterface $logger,
     ): Response
     {
-        $item = new Item();
-        $itemForm = $this->createForm(ItemType::class, $item);
-        $itemForm->handleRequest($request);
+        $idea = new Idea();
+        $ideaForm = $this->createForm(IdeaType::class, $idea);
+        $ideaForm->handleRequest($request);
 
-        $project = $item->getProject();
+        $project = $idea->getProject();
         $this->denyAccessUnlessGranted('view', $project, 'Tu n\'as les droits suffisants pour ceci !');
         $userCanEditProject = $this->isGranted('edit', $project);
 
-        if ($itemForm->isSubmitted() && $itemForm->isValid()) {
+        if ($ideaForm->isSubmitted() && $ideaForm->isValid()) {
             try {
-                $item->setCreatedBy($this->getUser());
-                if ($item->isProposed() === null) {
-                    $item->setProposed(false);
+                $idea->setCreatedBy($this->getUser());
+                if ($idea->isProposed() === null) {
+                    $idea->setProposed(false);
                 }
-                if ($item->isOwned() === null) {
-                    $item->setOwned(false)
+                if ($idea->isOwned() === null) {
+                    $idea->setOwned(false)
                         ->setValidated(false);
                 }
 
-                $entityManager->persist($item);
+                $entityManager->persist($idea);
                 $entityManager->flush();
-                $this->addFlash('success', 'L\'objet '.$item->getName().' a bien été créé.');
+                $this->addFlash('success', 'L\'idée '.$idea->getName().' a bien été créée.');
 
                 return $this->redirectToRoute('app_project_show', [
-                    'slug' => $item->getProject()->getSlug(),
+                    'slug' => $idea->getProject()->getSlug(),
                     'userCanEditProject' => $userCanEditProject,
-                    '_fragment' => $item->getCategory()->getName().'-'.$item->getName(),
+                    '_fragment' => $idea->getCategory()->getName().'-'.$idea->getName(),
                 ]);
             } catch (\Exception $e) {
                 $logger->error($e->getMessage());
@@ -57,44 +57,44 @@ class ItemController extends AbstractController
             }
         }
 
-        return $this->render('/item/edit.html.twig', [
-            'item' => $item,
-            'editItemForm' => $itemForm,
+        return $this->render('/idea/edit.html.twig', [
+            'idea' => $idea,
+            'editIdeaForm' => $ideaForm,
             'userCanEditProject' => $userCanEditProject,
             'projectSlug' => $project->getSlug(),
         ]);
     }
 
-    #[Route('/item/edit/{slug}', name: 'app_item_edit')]
-    #[IsGranted(ItemVoter::EDIT, 'item', 'Tu n\'as les droits suffisants pour ceci !', 403)]
+    #[Route('/idea/edit/{slug}', name: 'app_idea_edit')]
+    #[IsGranted(IdeaVoter::EDIT, 'idea', 'Tu n\'as les droits suffisants pour ceci !', 403)]
     public function edit(
         Request $request,
         EntityManagerInterface $entityManager,
         LoggerInterface $logger,
-        Item $item,
+        Idea $idea,
     ): Response
     {
-        if (!$item) {
-            $this->addFlash('error', 'Quelque chose d\'étrange vient d\'arriver, l\'objet que tu veux éditer n\existe pas ! Parles en à l\'admin');
+        if (!$idea) {
+            $this->addFlash('error', 'Quelque chose d\'étrange vient d\'arriver, l\'idée que tu veux éditer n\'existe pas ! Parles en à l\'admin');
             return $this->redirectToRoute('app_home');
         }
 
-        $itemForm = $this->createForm(ItemType::class, $item);
-        $itemForm->handleRequest($request);
+        $ideaForm = $this->createForm(IdeaType::class, $idea);
+        $ideaForm->handleRequest($request);
 
-        $project = $item->getProject();
+        $project = $idea->getProject();
         $userCanEditProject = $this->isGranted('edit', $project);
 
-        if ($itemForm->isSubmitted() && $itemForm->isValid()) {
+        if ($ideaForm->isSubmitted() && $ideaForm->isValid()) {
             try {
-                $entityManager->persist($item);
+                $entityManager->persist($idea);
                 $entityManager->flush();
-                $this->addFlash('success', 'L\'objet '.$item->getName().' a bien été modifié.');
+                $this->addFlash('success', 'L\'idée '.$idea->getName().' a bien été modifiée.');
 
                 return $this->redirectToRoute('app_project_show', [
-                    'slug' => $item->getProject()->getSlug(),
+                    'slug' => $idea->getProject()->getSlug(),
                     'userCanEditProject' => $userCanEditProject,
-                    '_fragment' => $item->getCategory()->getName().'-'.$item->getName(),
+                    '_fragment' => $idea->getCategory()->getName().'-'.$idea->getName(),
                 ]);
             } catch (\Exception $e) {
                 $logger->error($e->getMessage());
@@ -103,9 +103,9 @@ class ItemController extends AbstractController
             }
         }
 
-        return $this->render('/item/edit.html.twig', [
-            'item' => $item,
-            'editItemForm' => $itemForm,
+        return $this->render('/idea/edit.html.twig', [
+            'idea' => $idea,
+            'editIdeaForm' => $ideaForm,
             'userCanEditProject' => $userCanEditProject,
             'projectSlug' => $project->getSlug(),
         ]);

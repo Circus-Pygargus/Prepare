@@ -2,7 +2,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const body = document.querySelector('body');
     const formModals = document.querySelectorAll('.form-modal');
 
-    const formNamePrefixes = ['contributors', 'category', 'item']; // Just fill here =)
+    const formNamePrefixes = ['contributors', 'category', 'idea']; // Just fill here =)
     const formInitialData = [];
     for (const formNamePrefix of formNamePrefixes) {
         formInitialData[formNamePrefix] = [];

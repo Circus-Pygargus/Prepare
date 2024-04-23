@@ -2,7 +2,7 @@
 
 namespace App\Form\Type;
 
-use App\Entity\Item;
+use App\Entity\Idea;
 use App\Form\DataTransformer\CategoryTransformer;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\Form\AbstractType;
@@ -16,7 +16,7 @@ use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
-class ItemType extends AbstractType
+class IdeaType extends AbstractType
 {
     public function __construct(
         private CategoryTransformer $transformer,
@@ -50,7 +50,7 @@ class ItemType extends AbstractType
                 'help' => 'Ici on rempli la quantité nécéssaire,
 on peut aussi écrire la quantité détenue ou proposée comparée à la quantité nécessaire, par exemple : 3 kg sur 4,
 attention ! 3/4 kg sera compris comme 0.75.
-Merci d\'écrire l\'unité de mesure si elle est différente du nom de l\'objet.', // Ne pas modifier l'indentation, elle est utilisée pour l'affichage
+Merci d\'écrire l\'unité de mesure si elle est différente du nom de l\'idée.', // Ne pas modifier l'indentation, elle est utilisée pour l'affichage
             ])
             ->add('needed', ChoiceType::class, [
                 'label' => 'Nécessaire',
@@ -99,7 +99,7 @@ Merci d\'écrire l\'unité de mesure si elle est différente du nom de l\'objet.
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class' => Item::class,
+            'data_class' => Idea::class,
         ]);
     }
 }
