@@ -4,6 +4,7 @@ namespace App\Form\Type;
 
 use App\Entity\Idea;
 use App\Entity\IdeaType as EntityIdeaType;
+use App\Entity\MeasurementType;
 use App\Form\DataTransformer\CategoryTransformer;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Bundle\SecurityBundle\Security;
@@ -57,6 +58,27 @@ class IdeaType extends AbstractType
                 'label' => 'Commentaire',
                 'required' => false,
                 'trim' => true,
+            ])
+            ->add('measurementType', EntityType::class, [
+                'label' => 'Type de mesure',
+                'required' => true,
+                'constraints' => [
+                    new NotBlank([
+                        'message' => 'Tu dois choisir un type de mesure'
+                    ]),
+                ],
+                'class' => MeasurementType::class,
+                'choice_label' => 'name',
+                'empty_data' => '',
+                'placeholder' => 'Choisis un type de mesure',
+                'attr' => [
+                    'row_id' => 'measurement-type',
+                ],
+                'choice_attr' => function($choice) {
+                    return [
+                        'data-idea-type' => $choice->getIdeaType()->getName(),
+                    ];
+                },
             ])
             ->add('quantity', TextType::class, [
                 'label' => 'Quantité',
