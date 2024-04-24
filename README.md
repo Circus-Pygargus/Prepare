@@ -94,8 +94,8 @@ Lors de la création d'une idée, il y a plusieurs propriétés à renseigner:<b
 - un commentaire
 - un type de mesure <span style="color: red;">(reste à faire)</span><br>
 Le choix disponible est différent selon le type choisi.
-    - poids, volume ou distance (je me demande si la surface pourrait avoir son utilité)
-    - durée ou horodatage
+    - poids, volume, taille ou surface
+    - durée, horodatage ou distance
     - rien : lorsque l'unité de mesure est l'objet lui-même, par exemple un balai.
 - une quantité nécessaire
 - l'unité de mesure associée à la quantité renseignée <span style="color: red;">(reste à faire)</span><br>
