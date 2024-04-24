@@ -92,11 +92,11 @@ Lors de la création d'une idée, il y a plusieurs propriétés à renseigner:<b
     - action
 - un nom
 - un commentaire
-- un type de mesure <span style="color: red;">(reste à faire)</span><br>
+- un type de mesure<br>
 Le choix disponible est différent selon le type choisi.
     - poids, volume, taille ou surface
     - durée, horodatage ou distance
-    - rien : lorsque l'unité de mesure est l'objet lui-même, par exemple un balai.
+    - aucun : lorsque l'unité de mesure est l'objet lui-même, par exemple un balai.
 - une quantité nécessaire
 - l'unité de mesure associée à la quantité renseignée <span style="color: red;">(reste à faire)</span><br>
 Les choix disponibles dépendent du type de mesure selectionné.
@@ -147,7 +147,6 @@ Je n'ai pas encore décidé quelle méthode je souhaite utiliser pour prévenir 
 - style en mode mobile first !
 - modification de la table item : retirer les propriétés proposed et owned
 - créer les tables :
-    - measurement_type
     - mesurement_unit
     - own_type
     - quantity
