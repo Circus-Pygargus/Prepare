@@ -27,6 +27,7 @@ Encore
     .addEntry('project', './assets/project.js')
     .addEntry('form-field-help-shower', './assets/js/form/form-field-help-shower.js')
     .addEntry('loading-spinner', './assets/js/form/loading-spinner.js')
+    .addEntry('manage_idea_form', './assets/js/form/manage-idea-form.js')
 
     // When enabled, Webpack "splits" your files into smaller pieces for greater optimization.
     .splitEntryChunks()
