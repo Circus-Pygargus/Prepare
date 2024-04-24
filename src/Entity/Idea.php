@@ -58,6 +58,10 @@ class Idea
     #[Gedmo\Slug(fields: ['name'])]
     private ?string $slug = null;
 
+    #[ORM\ManyToOne(inversedBy: 'ideas')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?MeasurementType $measurementType = null;
+
     public function __construct()
     {
         $this->createdAt = new \DateTimeImmutable();
@@ -208,5 +212,17 @@ class Idea
     public function getSlug(): ?string
     {
         return $this->slug;
+    }
+
+    public function getMeasurementType(): ?MeasurementType
+    {
+        return $this->measurementType;
+    }
+
+    public function setMeasurementType(?MeasurementType $measurementType): static
+    {
+        $this->measurementType = $measurementType;
+
+        return $this;
     }
 }
