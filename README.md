@@ -101,9 +101,11 @@ Le choix disponible est différent selon le type choisi.
 - l'unité de mesure associée à la quantité renseignée <span style="color: red;">(reste à faire)</span><br>
 Les choix disponibles dépendent du type de mesure selectionné.
     - t, kg, hg, dag, g, dg, cg, mg
-    - mètre cube, l, dl, cl, ml
-    - km, hm, dam, m, dm, cm, mm
-    - année, semaine, jour, heure, minute, seconde, milliseconde
+    - m, dm, cm, mm (taille)
+    - km, hm, dam, m (distance)
+    - m², dm², cm², mm²
+    - m³, l, dl, cl, ml
+    - jour, heure, minute, seconde, milliseconde
     - un champ date et heure
     - un champ texte libre en prévision de cas spéciaux, par exemple boite, paquet de 10
 
@@ -147,10 +149,9 @@ Je n'ai pas encore décidé quelle méthode je souhaite utiliser pour prévenir 
 - style en mode mobile first !
 - modification de la table item : retirer les propriétés proposed et owned
 - créer les tables :
-    - mesurement_unit
     - own_type
     - quantity
-    - image
+    - image ou picture
 - UI : en home page
     - coller le style de bouton sur "Nouveau projet"
     - afficher les projets en colonne
