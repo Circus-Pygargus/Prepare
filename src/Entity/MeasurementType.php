@@ -25,9 +25,13 @@ class MeasurementType
     #[ORM\OneToMany(targetEntity: Idea::class, mappedBy: 'measurementType')]
     private Collection $ideas;
 
+    #[ORM\OneToMany(targetEntity: MeasurementUnit::class, mappedBy: 'measurementType')]
+    private Collection $measurementUnits;
+
     public function __construct()
     {
         $this->ideas = new ArrayCollection();
+        $this->measurementUnits = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -83,6 +87,36 @@ class MeasurementType
             // set the owning side to null (unless already changed)
             if ($idea->getMeasurementType() === $this) {
                 $idea->setMeasurementType(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, MeasurementUnit>
+     */
+    public function getMeasurementUnits(): Collection
+    {
+        return $this->measurementUnits;
+    }
+
+    public function addMeasurementUnit(MeasurementUnit $measurementUnit): static
+    {
+        if (!$this->measurementUnits->contains($measurementUnit)) {
+            $this->measurementUnits->add($measurementUnit);
+            $measurementUnit->setMeasurementType($this);
+        }
+
+        return $this;
+    }
+
+    public function removeMeasurementUnit(MeasurementUnit $measurementUnit): static
+    {
+        if ($this->measurementUnits->removeElement($measurementUnit)) {
+            // set the owning side to null (unless already changed)
+            if ($measurementUnit->getMeasurementType() === $this) {
+                $measurementUnit->setMeasurementType(null);
             }
         }
 
