@@ -1,5 +1,6 @@
-# Prepare
+Projet mis en pause, pour l'instant, je n'arrive pas à choisir la manière d'implémenter ce que je désire mettre en place ...<br>
 
+# Prepare
 Un logiciel d'aide à la gestion d'évènement, que ce soit pour la préparation, le déroulement ou l'après, il peut s'adapter à nos besoins.
 
 ## Mise en garde
